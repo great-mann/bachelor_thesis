@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' profile='Immersive' version='3.0' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.0.xsd'>
+	<Engine>
+		<RenderJob>
+			<WindowGroup DEF='defaultWindowGroup'>
+				<!--
+				<LocalWindow DEF='overviewWindow' size='512 384' position="10 50">
+					<Viewarea lowerLeft="0 0" upperRight="1 1" view="overviewVP"/>
+				</LocalWindow>
+				-->
+				<LocalWindow DEF='eyeWindow' size='1280 720' position="550 50">
+					<Viewarea lowerLeft="0 0" upperRight="1 1" view="eyeVP"/>
+				</LocalWindow>
+
+			</WindowGroup>
+			
+		</RenderJob>
+	</Engine>
+
+	<Scene DEF='scene'>
+   <!-- position="-1.226 0.708 -0.143" orientation="-0.253 -0.94 -0.227 1.731" -->
+		<Viewpoint DEF="overviewVP" description="overview" zNear="0.001" zFar="10" isInteractive="true" position="0 0 2" orientation="0 0 0 0"/>
+		<NavigationInfo interactionType='ray'/>
+		<Transform translation="0 5 0">
+			<PointLight location="0 5 0" color="1 1 1"/>
+		</Transform>
+
+		<!-- MarkerTracker IOSensor
+		cameraCalibrationUrl='/homes/tpfeiffe/develop/projects/utilMarkerTracker.lib/projects/utilCameraCalibration.bin/data/xml/out_camera_data_SonyPlaystationEyeToy.xml'
+		-->
+		<!--IOSensor DEF='markerTracker' name='markerTracker' type='irioMarkerTracker' 
+			useInternalInput='true' internalInputCameraNumber='1' markerCoordinateSystemIsXZ='true'
+			cameraCalibrationUrl='D:\Entwicklung\wbs.dvlpEnvironmentWindows.pack\projects\utilMarkerTracker.lib\projects\utilCameraCalibration.bin\data\xml\out_camera_data_IntelGestureCam_640x480.xml'
+			defaultMarkerSize='0.085' knownMarkers='66 274 373 89 98 58 112 195 138 234 166 126' markerSizes='0.0425 0.0425 0.0425 0.0425 0.0425 0.0425 0.0425 0.0425 0.0425 0.0425 0.0425 0.0425' internalWidth="640" internalHeight="480" 
+			downScaleFactor="1" scales="1" useLastFrameAsPrior="false"-->
+		<IOSensor DEF='markerTracker' name='markerTracker' type='irioMarkerTracker' 
+			useInternalInput='true' internalInputCameraNumber='1' markerCoordinateSystemIsXZ='true'
+			cameraCalibrationUrl='D:\Entwicklung\wbs.dvlpEnvironmentWindows.pack\projects\utilMarkerTracker.lib\projects\utilCameraCalibration.bin\data\xml\out_camera_data_IntelGestureCam_1280x720.xml' internalWidth="1280" internalHeight="720" 
+			defaultMarkerSize='0.085' knownMarkers='66 274 373 89 98 58 112 195 138 234 166 126' markerSizes='0.0425 0.0425 0.0425 0.0425 0.0425 0.0425 0.0425 0.0425 0.0425 0.0425 0.0425 0.0425' 
+			downScaleFactor="1" scales="1" useLastFrameAsPrior="true" minMarkerSizeInPixel="20" maxNumberOfMarkers="3">
+			<field accessType='inputOnly'  name='inputImage'       	type='SFImage'/>
+			<field accessType='outputOnly' name='markerMatrizes'   	type='MFMatrix4f'/>
+			<field accessType='outputOnly' name='markerIds'        	type='MFInt32'/>
+			<field accessType='outputOnly' name='fieldOfView'       type='SFFloat'/>
+			<field accessType='outputOnly' name='outputImage'      	type='SFImage'/>
+			<field accessType='outputOnly' name='outputMarkerImage' type='SFImage'/>
+		</IOSensor>
+		
+		<EventTunnel DEF='MarkerTrackingEvents' label='MarkerTrackingEvents'>
+      <field name='detectedMarkerIDs' type='MFInt32' accessType='inputOnly' value='' />
+    </EventTunnel>
+    <ROUTE fromNode='markerTracker' fromField='markerIds' toNode='MarkerTrackingEvents' toField='detectedMarkerIDs'/>
+
+		<Transform DEF="TrackingRoot">
+			<Transform rotation="0 0 0 -1.57">
+				<Inline DEF="markers" url="MillimeterField.x3d" nameSpaceName='markers'/>
+			</Transform>
+			<Transform scale="0.1 0.1 0.1">
+				<Inline DEF="haus" url="Haus.x3d" nameSpaceName='haus'/>
+			</Transform>
+		</Transform>		
+		
+		<MatrixTransform DEF='HeadTransform' invert="false" >
+			<Viewpoint DEF="eyeVP" description="eye" fieldOfView='0.788293' zNear="0.001" zFar="10" position="0 0 0" isInteractive="false"/>
+			<ROUTE fromNode="markerTracker" fromField="fieldOfView" toNode="eyeVP" toField="fieldOfView"/>
+			<Transform translation='0 0 0.021'>
+				<Transform translation='0 0.08 0'>
+					<Billboard axisOfRotation="0 0 0">
+						<Shape>
+							<Appearance><Material diffuseColor='0 0 0'></Material></Appearance>
+							<Text solid='true' depth='0' string='Camera'>
+								<GenericFontStyle family='SANS' justify='FIRST' style='PLAIN' size='0.06' />
+							</Text>
+						</Shape>
+					</Billboard>
+				</Transform>
+			</Transform>
+			<Transform translation="0 0 0.1" rotation="1 0 0 1.57">
+				<Shape>
+					<Cone bottomRadius="0.04" height="0.2" />
+					<Appearance DEF="CAMERACOLOR">
+						<Material diffuseColor='0 0 1' transparency='0.2'/>
+					</Appearance>
+				</Shape>
+			</Transform>
+			<Transform translation="0 0 0.15" rotation="1 0 0 1.57">
+				<Shape>
+					<Box size="0.1 0.2 0.1"/>
+					<Appearance USE="CAMERACOLOR" />
+				</Shape>
+			</Transform>
+		
+
+
+		<Collision collide='false' enabled='true'>
+			<Transform DEF='eyeSpace' translation='0 0 0' rotation='1 0 0 0.12'>
+				<Transform DEF='leftEyeSpace' >
+					<Transform DEF='leftEyeTransform'>
+
+
+						<Transform DEF='leftEyeRayTransformRot' rotation='1 0 0 1.571'>
+							<Transform DEF='leftEyeRayTransformTrans' translation='0 -5 0'>
+								<Shape DEF='leftEyeShape'>
+									<Cylinder radius='0.001' height='10' DEF='leftEyeRay' />
+									<Appearance DEF='eyeRayAppearance'>
+										<Material diffuseColor='0 1 0' transparency='0.5'/>
+									</Appearance>
+								</Shape>
+							</Transform>
+						</Transform>
+
+					</Transform>
+				</Transform>
+
+				<Transform DEF='rightEyeSpace'>
+					<Transform DEF='rightEyeTransform'>
+
+
+						<Transform DEF='rightEyeRayTransformRot' rotation='1 0 0 1.571'>
+							<Transform DEF='rightEyeRayTransformTrans' translation='0 -5 0'>
+								<Shape DEF='rightEyeShape'>
+									<Cylinder radius='0.001' height='10' DEF='rightEyeRay' />
+									<Appearance USE='eyeRayAppearance'/>
+								</Shape>
+							</Transform>
+						</Transform>
+
+					</Transform>
+				</Transform>
+
+			</Transform>
+		</Collision>
+	</MatrixTransform>
+
+	<!-- This is the base -->
+	<Viewspace>
+		<ImageBackground>
+			<PixelTexture DEF="sceneImage">
+				<TextureProperties borderWidth="0.1" borderColor="1.0 1.0 1.0" magnificationFilter="NICEST"/>
+			</PixelTexture>
+		</ImageBackground>
+		<Transform translation='-1 -0.7  -1'>
+			<Shape>
+				<Appearance><Material diffuseColor='1 0 0'></Material></Appearance>
+				<Text DEF="position" solid='true' depth='0' string='Position'>
+					<GenericFontStyle family='SANS' justify='FIRST' style='PLAIN' size='0.1' />
+				</Text>
+			</Shape>
+		</Transform>
+		<Transform translation='-1 -0.5  -1'>
+			<Shape>
+				<Appearance><Material diffuseColor='1 0 0'></Material></Appearance>
+				<Text DEF="frame_of_reference_marker_id" solid='true' depth='0' string='MarkerID for Frame of Reference'>
+					<GenericFontStyle family='SANS' justify='FIRST' style='PLAIN' size='0.1' />
+				</Text>
+			</Shape>
+		</Transform>		
+		<ROUTE fromNode='markerTracker' fromField='outputImage' toNode='sceneImage' toField='image'/>
+	</Viewspace>
+
+	<Script DEF='multiMarkerTracking' directOutput='true' mustEvaluate='true' url="MultiMarkerTracking.js">
+		<field accessType='inputOnly' name='markerMatrizes' type='MFMatrix4f'/>
+		<field accessType='inputOnly' name='markerIds' type='MFInt32'/>
+		<field accessType='initializeOnly' name='markerNamePrefix' type='SFString' value='markers::Marker_'/>
+		<field accessType='initializeOnly' name='originId' type='SFInt32' value='-1'/>
+		<field accessType='initializeOnly' name='staticMarkerIds' type='MFInt32' value='38 42 49 75 58 66 89 98 112 126 138 166 173 213 250 258 195 234 274 335 346 373 535 773 981 '/>
+		<field accessType='outputOnly' name='frame_of_reference' type='SFMatrix4f'/>
+		<field accessType='outputOnly' name='frame_of_reference_marker_id' type='SFInt32'/>
+		<field accessType='outputOnly' name='frame_of_reference_translation' type='SFVec3f'/>
+		<field accessType='outputOnly' name='frame_of_reference_inverted' type='SFMatrix4f'/>
+		<field accessType ='outputOnly' name='isMarked' type='SFInt32' />
+		<field accessType ='outputOnly' name='referenceFound' type='SFBool' />
+		<field accessType ='outputOnly' name='markerState' type='SFString'/>
+	</Script>
+	<ROUTE fromNode='markerTracker' fromField='markerMatrizes' toNode='multiMarkerTracking' toField='markerMatrizes' />
+	<ROUTE fromNode='markerTracker' fromField='markerIds' toNode='multiMarkerTracking' toField='markerIds' />
+	<ROUTE fromNode='multiMarkerTracking' fromField='frame_of_reference_inverted' toNode='HeadTransform' toField='matrix' />
+	<ROUTE fromNode='multiMarkerTracking' fromField='frame_of_reference_translation' toNode='position' toField='string' />
+	<ROUTE fromNode='multiMarkerTracking' fromField='referenceFound' toNode='TrackingRoot' toField='render' />
+	<ROUTE fromNode='multiMarkerTracking' fromField='frame_of_reference_marker_id' toNode='frame_of_reference_marker_id' toField='string' />
+
+</Scene>
+
+</X3D>

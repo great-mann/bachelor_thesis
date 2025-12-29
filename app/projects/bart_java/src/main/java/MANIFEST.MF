@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Main-Class: de.citec.clfvr.bart.TestMarkerTracker
+Class-Path: opencv-249.jar;D:\Entwicklung\CITEC.Projects\CLFVR.BIN\opencv-2.4.9\java\opencv-249.jar
+
+

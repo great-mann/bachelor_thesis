@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile='Immersive'>
+  <Scene name="markers">
+	<Transform DEF="Field" rotation='0 0 0 1.57'>
+	  <Transform translation="0 0 -0.001">
+		<Shape>
+		  <Box size="1.1 0.9 0.001" solid="true"/>
+		  <Appearance DEF="Tisch">
+			<Material diffuseColor="1 1 1" shininess="0.2" transparency='0.9'/>
+		  </Appearance>
+		</Shape>
+	  </Transform>
+
+	  <!--Marker-->
+
+	  <!-- First Row -->
+	  <Transform DEF="Marker_0" translation="-0.45 0.35 0" rotation="0 0 0 3.1415926">
+		<Shape>
+		  <Box size="0.085 0.085 0.0001" solid="true"/>
+		  <Appearance >
+			<Material diffuseColor="1 1 1" shininess="0.2" transparency='0.8'/>
+			<ImageTexture url="../textures/marker_0.png"/>
+		  </Appearance>
+		</Shape>
+	  </Transform>
+	  <Transform DEF="Marker_1" translation="-0.15 0.35 0" rotation="0 0 0 3.1415926">
+		<Shape>
+		  <Box size="0.085 0.085 0.0001" solid="true"/>
+		  <Appearance >
+			<Material diffuseColor="1 1 1" shininess="0.2" transparency='0.8'/>
+			<ImageTexture url="../textures/marker_1.png"/>
+		  </Appearance>
+		</Shape>
+	  </Transform>
+	  <Transform DEF="Marker_42" translation="0.15 0.35 0" rotation="0 0 0 3.1415926">
+		<Shape>
+		  <Box size="0.085 0.085 0.0001" solid="true"/>
+		  <Appearance >
+			<Material diffuseColor="1 1 1" shininess="0.2" transparency='0.8'/>
+			<ImageTexture url="../textures/marker_42.png"/>
+		  </Appearance>
+		</Shape>
+	  </Transform>
+	  <Transform DEF="Marker_75" translation="0.45 0.35 0" rotation="0 0 0 3.1415926">
+		<Shape>
+		  <Box size="0.085 0.085 0.0001" solid="true"/>
+		  <Appearance >
+			<Material diffuseColor="1 1 1" shininess="0.2" transparency='0.8'/>
+			<ImageTexture url="../textures/marker_75.png"/>
+		  </Appearance>
+		</Shape>
+	  </Transform>
+	  <!-- Second Row -->
+	  <Transform DEF="Marker_173" translation="-0.45 0.15 0 " rotation="0 0 0 3.1415926">
+		<Shape>
+		  <Box size="0.085 0.085 0.0001" solid="true"/>
+		  <Appearance >
+			<Material diffuseColor="1 1 1" shininess="0.2" transparency='0.8'/>
+			<ImageTexture url="../textures/marker_173.png"/>
+		  </Appearance>
+		</Shape>
+	  </Transform>
+
+	  <Transform DEF="Marker_213" translation="0.45 0.15 0 " rotation="0 0 0 3.1415926">
+		<Shape>
+		  <Box size="0.085 0.085 0.0001" solid="true"/>
+		  <Appearance >
+			<Material diffuseColor="1 1 1" shininess="0.2" transparency='0.8'/>
+			<ImageTexture url="../textures/marker_213.png"/>
+		  </Appearance>
+		</Shape>
+	  </Transform>
+	  <!-- Third Row -->
+	  <Transform DEF="Marker_250" translation="-0.45 -0.15 0 " rotation="0 0 0 3.1415926">
+		<Shape>
+		  <Box size="0.085 0.085 0.0001" solid="true"/>
+		  <Appearance >
+			<Material diffuseColor="1 1 1" shininess="0.2" transparency='0.8'/>
+			<ImageTexture url="../textures/marker_250.png"/>
+		  </Appearance>
+		</Shape>
+	  </Transform>
+
+	  <Transform DEF="Marker_346" translation="0.45 -0.15 0 " rotation="0 0 0 3.1415926">
+		<Shape>
+		  <Box size="0.085 0.085 0.0001" solid="true"/>
+		  <Appearance >
+			<Material diffuseColor="1 1 1" shininess="0.2" transparency='0.8'/>
+			<ImageTexture url="../textures/marker_346.png"/>
+		  </Appearance>
+		</Shape>
+	  </Transform>
+	  <!-- Fourth Row -->
+	  <Transform DEF="Marker_682" translation="-0.45 -0.35 0 " rotation="0 0 0 3.1415926">
+		<Shape>
+		  <Box size="0.085 0.085 0.0001" solid="true"/>
+		  <Appearance >
+			<Material diffuseColor="1 1 1" shininess="0.2" transparency='0.8'/>
+			<ImageTexture url="../textures/marker_682.png"/>
+		  </Appearance>
+		</Shape>
+	  </Transform>
+
+	  <Transform DEF="Marker_773" translation="-0.15 -0.35 0 " rotation="0 0 0 3.1415926">
+		<Shape>
+		  <Box size="0.085 0.085 0.0001" solid="true"/>
+		  <Appearance >
+			<Material diffuseColor="1 1 1" shininess="0.2" transparency='0.8'/>
+			<ImageTexture url="../textures/marker_773.png"/>
+		  </Appearance>
+		</Shape>
+	  </Transform>
+
+	  <Transform DEF="Marker_981" translation="0.15 -0.35 0 " rotation="0 0 0 3.1415926">
+		<Shape>
+		  <Box size="0.085 0.085 0.0001" solid="true"/>
+		  <Appearance >
+			<Material diffuseColor="1 1 1" shininess="0.2" transparency='0.8'/>
+			<ImageTexture url="../textures/marker_981.png"/>
+		  </Appearance>
+		</Shape>
+	  </Transform>
+
+	  <Transform DEF="Marker_1023" translation="0.45 -0.35 0 " rotation="0 0 0 3.1415926">
+		<Shape>
+		  <Box size="0.085 0.085 0.0001" solid="true"/>
+		  <Appearance >
+			<Material diffuseColor="1 1 1" shininess="0.2" transparency='0.8'/>
+			<ImageTexture url="../textures/marker_1023.png"/>
+		  </Appearance>
+		</Shape>
+	  </Transform>
+	</Transform>
+  </Scene>
+</X3D>

@@ -1,0 +1,52 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+INCLUDE(FindPkgConfig)
+
+SET( PROJECT_NAME cameracalibration )
+PROJECT( ${PROJECT_NAME} )
+
+#debug?
+set(CMAKE_BUILD_TYPE Debug)
+
+
+SET(CAMCALIB_LIBNAME "${PROJECT_NAME}")
+SET(CAMCALIB_VERSION_MAJOR    "0")
+SET(CAMCALIB_VERSION_MINOR    "1")
+SET(CAMCALIB_VERSION_REVISION "0")
+SET(CAMCALIB_VERSION   "${CAMCALIB_VERSION_MAJOR}.${CAMCALIB_VERSION_MINOR}.${CAMCALIB_VERSION_REVISION}")
+SET(CAMCALIB_SOVERSION "${CAMCALIB_VERSION_MAJOR}.${CAMCALIB_VERSION_MINOR}")
+SET(CAMCALIB_PACKAGE   "${CAMCALIB_LIBNAME}-${CAMCALIB_VERSION_MAJOR}.${CAMCALIB_VERSION_MINOR}")
+
+SET(PREFIX      ${CMAKE_INSTALL_PREFIX})
+SET(BINDIR     "${PREFIX}/bin")
+SET(INCLUDEDIR "${PREFIX}/include/cameracalibration")
+SET(MANDIR     "${PREFIX}/man")
+SET(LIBDIR     "${PREFIX}/lib")
+SET(PKGDIR     "${PREFIX}/lib/pkgconfig")
+SET(CFGDIR     "${PREFIX}/etc/cameracalibration")
+SET(DATADIR    "${PREFIX}/share/cameracalibration")
+
+
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -fstack-protector")
+
+SET(ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH}:${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" )
+
+
+
+find_package(OpenCV 2.4.2 REQUIRED core imgproc highgui calib3d video )
+MESSAGE(STATUS "using opencv version ${OPENCV_VERSION} from ${OPENCV_PREFIX}")
+INCLUDE_DIRECTORIES(${OpenCV_INCLUDE_DIRS})
+
+
+
+
+#build & install demo
+ADD_EXECUTABLE(cameraCalibration src/CameraCalibration.cc)
+TARGET_LINK_LIBRARIES(cameraCalibration ${OpenCV_LIBS})
+
+install(TARGETS cameraCalibration DESTINATION bin)
+
+
+
+
+
+

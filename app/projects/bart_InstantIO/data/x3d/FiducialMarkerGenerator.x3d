@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "http://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' profile='Full' version='3.0' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.0.xsd'>
+  
+    
+    <Engine DEF='engine'>
+        <RenderJob>
+            <WindowGroup>
+                <LocalWindow size='512 512' drawToolBar='false' border='false'>
+                    <Viewarea DEF='viewarea'/>
+                </LocalWindow>
+            </WindowGroup>
+        </RenderJob>
+    </Engine>
+    
+    <Scene>
+        
+        <SolidBackground color='1 1 0'/>
+        
+        <ExternProtoDeclare name='FiducialMarker' url='FiducialMarker.x3d'/>
+        
+        <Transform rotation='1 0 0 1.571' scale='83 83 83'>
+            <FiducialMarker DEF='marker' id='1'/>
+        </Transform>
+
+
+        <Script DEF='pipe' mustEvaluate="true" directOutput="true">
+                <field accessType='initializeOnly' name='marker'   type='SFNode' >
+                    <FiducialMarker USE='marker'/>
+                </field>
+                <field accessType='initializeOnly' name='viewarea'   type='SFNode' >
+                    <FiducialMarker USE='engine::viewarea'/>
+                </field>
+          
+                <![CDATA[javascript:
+  
+  					function initialize() { 
+                        viewarea.getParents()[0].size = new SFVec2f(512,512);
+                        viewarea.getParents()[0].drawToolBar = false;
+                        viewarea.getParents()[0].border = false;
+                        viewarea.grabFrames = 1;
+                        setTimeout("next1(1)", 200);
+                    }
+                    
+                    function next1(id) {
+                        grabFile = "Marker" + id + ".png"
+                        viewarea.grabFrames = 1;
+                        if (id < 1023) {
+                            setTimeout("next2(" + (id+1) + ")", 100);
+                        }
+                    }
+                    
+                    function next2(id) {
+                        marker.id = id;
+                        if (id < 1023) {
+                            setTimeout("next1(" + (id) + ")", 100);
+                        }
+                    }
+                    
+            
+                ]]>
+            </Script>
+
+
+
+
+    </Scene>
+</X3D>

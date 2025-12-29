@@ -1,0 +1,22 @@
+mat: 1456x1088-pBAA/RAW
+[ WARN:0@1.086] global cap_gstreamer.cpp:1754 open OpenCV | GStreamer warning: unable to query duration of stream
+[ WARN:0@1.087] global cap_gstreamer.cpp:1777 open OpenCV | GStreamer warning: Cannot query video position: status=0, value=-1, duration=-1
+[2025-10-29 11:24:06.497809] [0x0000007f74ec6500] [warning] Adding camera default without calibration!
+
+[RES] 360x270  factor=0.25  prior=1  full=1
+Saved debug_threshold_1_1.png
+[RES] 720x540  factor=0.5  prior=1  full=1
+Saved debug_threshold_1_2.png
+[RES] 1440x1080  factor=1  prior=1  full=1
+Saved debug_threshold_1_3.png
+[RES] 360x270  factor=0.25  prior=1  full=1
+Saved debug_threshold_1_4.png
+[RES] 720x540  factor=0.5  prior=1  full=1
+Saved debug_threshold_1_5.png
+[RES] 1440x1080  factor=1  prior=1  full=1
+Saved debug_threshold_1_6.png
+[RES] 360x270  factor=0.25  prior=1  full=1
+Saved debug_threshold_1_7.png
+[RES] 720x540  factor=0.5  prior=1  full=1
+Saved debug_threshold_1_8.png
+[RES] 1440x1080  factor=1  prior=1  full=1

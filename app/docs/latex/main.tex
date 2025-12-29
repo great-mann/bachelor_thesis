@@ -1,0 +1,99 @@
+ \documentclass[ncs,12pt,oneside,english]{YY_Styles/bart}
+
+\input{format.tex}
+
+%
+% START
+%
+\begin{document}
+
+%
+% Frontmatter
+% ===========
+%
+% Kein Frontmatter, da dann der Titel noch einmal generiert wird...
+%\begin{frontmatter}
+\renewcommand{\baselinestretch}{1.08}
+% Titelseite
+\input{title.tex}
+\thispagestyle{empty}
+\newpage
+\thispagestyle{empty}
+\cleardoublepage
+\thispagestyle{empty}
+\input{second_page.tex}
+%
+\renewcommand{\baselinestretch}{1.08}
+%
+%\newpage               % leere Seite nach der Titelseite
+%\thispagestyle{empty}  % und bitte auch ohne Seitenzahlen
+
+% Im Vorspann bitte römische Zahlen
+\pagenumbering{Roman} 
+%
+\subimport{.}{summary.tex}
+%
+% Welche Level sollen im Inhaltsverzeichnis dargestellt werden?
+% Hier Tiefe 3 bei sections
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{2}
+\tableofcontents
+%
+%\newpage
+%\thispagestyle{empty}
+%
+%\newpage
+%\thispagestyle{empty}
+%\cleardoublepage
+%
+\cleardoublepage
+\phantomsection \label{listoffigures}
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
+%
+\cleardoublepage
+\phantomsection \label{listoftables}
+\addcontentsline{toc}{chapter}{List of Tables}
+\listoftables
+%
+\cleardoublepage
+% Switch to standard font for acronyms
+%\renewcommand{\aclabelfont}[1]{\normalfont{\normalsize{#1}}\hfill}
+\phantomsection \label{listofacronyms}
+\addcontentsline{toc}{chapter}{List of Acronyms}
+\markboth{List of Acronyms}{List of Acronyms}
+\subimport{.}{acronyms.tex}
+%
+\cleardoublepage
+\phantomsection \label{acknowledgement}
+\addcontentsline{toc}{chapter}{Acknowledgement}
+\subimport{.}{acknowledgement.tex}
+
+%\end{frontmatter}
+
+\begin{mainmatter}
+
+\subimport{01_Introduction/}{introduction.tex}
+\subimport{02_Installation/}{installation.tex}
+\subimport{03_First_Steps/}{first_steps.tex}
+\subimport{04_Developer_Instructions/}{developer_instructions.tex}
+\subimport{05_Inside_BART/}{inside_bart.tex}
+\subimport{06_Evaluation/}{evaluation.tex}
+
+\cleardoublepage
+\phantomsection \label{bibliography}
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliographystyle{newapa}
+\bibliography{literature}
+
+\end{mainmatter}
+
+\begin{backmatter}
+\part*{Appendix\markboth{Appendix}{}}
+\begin{appendix}
+\refstepcounter{chapter}
+\addcontentsline{toc}{chapter}{Appendix}
+\subimport{XX_Appendix/}{appendix.tex}
+\end{appendix} 
+\end{backmatter}
+\end{document}

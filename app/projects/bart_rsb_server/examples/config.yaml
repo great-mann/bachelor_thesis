@@ -1,0 +1,49 @@
+%YAML:1.0
+
+# Marker tracker settings
+config: !!MarkerTrackerConfig
+    debugging: 0
+    decayTime: 5000
+    useMedianFlow: 0
+    minContourLengthAllowed: 10.0
+    roiScalePrior: 1.3
+    roiScaleRefinement: 1.3
+    minMarkerSizeInPixels: 7
+    maxNumberOfMarkers: 20
+    markerSizePixels: [100, 100]
+    markerSize: [0.06, 0.06]
+    markerBodies: !!MarkerBody
+        - name: "body1"
+          isStatic: 1
+          markers:
+              - { id:258, size:0.06, position:[0, 0, 0], orientation:[0, 0, 0, 1.57] }
+              - { id:38, size:0.085, position:[-0.45, 0, -0.35], orientation:[0, 0, 0, 1.57] }
+              - { id:42, size:0.085, position:[-0.15, 0, -0.35], orientation:[0, 0, 0, 1.57] }
+              - { id:49, size:0.085, position:[0.15, 0, -0.35], orientation:[0, 0, 0, 1.57] }
+              - { id:75, size:0.085, position:[0.45, 0, -0.35], orientation:[0, 0, 0, 1.57] }
+              - { id:173, size:0.085, position:[-0.45, 0, -0.15], orientation:[0, 0, 0, 1.57] }
+              - { id:213, size:0.085, position:[0.45, 0, -0.15], orientation:[0, 0, 0, 1.57] }
+              - { id:250, size:0.085, position:[-0.45, 0, 0.15], orientation:[0, 0, 0, 1.57] }
+              - { id:346, size:0.085, position:[0.45, 0, 0.15], orientation:[0, 0, 0, 1.57] }
+              - { id:535, size:0.085, position:[-0.45, 0, 0.35], orientation:[0, 0, 0, 1.57] }
+              - { id:773, size:0.085, position:[-0.15, 0, 0.35], orientation:[0, 0, 0, 1.57] }
+              - { id:981, size:0.085, position:[0.15, 0, 0.35], orientation:[0, 0, 0, 1.57] }
+              - { id:335, size:0.085, position:[0.45, 0, 0.35], orientation:[0, 0, 0, 1.57] }
+              - { id:66, size:0.0425, position:[-0.275, 0, -0.175], orientation:[0, 0, 0, 1.57] }
+              - { id:274, size:0.0425, position:[-0.075, 0, -0.175], orientation:[0, 0, 0, 1.57] }
+              - { id:373, size:0.0425, position:[0.075, 0, -0.175], orientation:[0, 0, 0, 1.57] }
+              - { id:89, size:0.0425, position:[0.275, 0, -0.175], orientation:[0, 0, 0, 1.57] }
+              - { id:58, size:0.0425, position:[-0.275, 0, -0.075], orientation:[0, 0, 0, 1.57] }
+              - { id:98, size:0.0425, position:[0.275, 0, -0.075], orientation:[0, 0, 0, 1.57] }
+              - { id:112, size:0.0425, position:[-0.275, 0, 0.075], orientation:[0, 0, 0, 1.57] }
+              - { id:195, size:0.0425, position:[0.275, 0, 0.075], orientation:[0, 0, 0, 1.57] }
+              - { id:126, size:0.0425, position:[-0.275, 0, 0.175], orientation:[0, 0, 0, 1.57] }
+              - { id:166, size:0.0425, position:[-0.075, 0, 0.175], orientation:[0, 0, 0, 1.57] }
+              - { id:234, size:0.0425, position:[0.075, 0, 0.175], orientation:[0, 0, 0, 1.57] }
+              - { id:138, size:0.0425, position:[0.275, 0, 0.175], orientation:[0, 0, 0, 1.57] }
+    cameras: 
+        - name: "default"
+          isStatic: 0
+          calibrationUrl: "C:\\Users\\Henri\\Uni\\Arbeit\\bart\\build\\x64\\Release\\out_camera_data_IntelGestureCam_1280x720.xml"
+              
+              

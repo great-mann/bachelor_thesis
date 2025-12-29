@@ -1,0 +1,25 @@
+# ### Bielefeld AR Tracker RSB connection ###
+# ===============================
+# 
+# Sets required variables for finding bart library:
+#
+# BART_RSB_FOUND
+# BART_RSB_INCLUDE_DIRS
+# BART_RSB_LIBRARY_DIRS
+# BART_RSB_LIBRARIES
+# BART_RSB_VERSION
+# 
+# Example:
+# find_package(bart_rsb 0.1)
+#
+# ###############################################################################
+
+INCLUDE(FindPkgConfig)
+
+GET_FILENAME_COMPONENT(CONFIG_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+
+SET(BART_RSB_FOUND TRUE)
+SET(BART_RSB_INCLUDE_DIRS "${CONFIG_DIR}/../../include/@BART_RSB_PACKAGE@")
+SET(BART_RSB_VERSION "@BART_VERSION@")
+
+# TODO: find dependencies here and append their include dirs to BART_RSB_INCLUDE_DIRS

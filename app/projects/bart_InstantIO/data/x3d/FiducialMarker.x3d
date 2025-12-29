@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "http://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' profile='Full' version='3.0' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.0.xsd'>
+  
+    <ProtoDeclare name='FiducialMarker'>
+        <ProtoInterface>
+            <field accessType='inputOutput' name='id'   type='SFInt32' value='1'   description='Marker id in [1,1023] - Default: 1'/>
+            <field accessType='inputOutput' name='size' type='SFFloat' value='0.1' description='Marker size in m - Default 0.1'/>
+        </ProtoInterface>
+    
+        <ProtoBody>
+            
+            <Transform DEF='markerBase' translation='0 0.001 0'>
+                
+                <Replicator DEF='blackRects'>
+                    <Transform rotation='1 0 0 1.571' containerField='child'>
+                        <Shape>
+                            <Rectangle2D size='1 1' />
+                            <Appearance>
+                                <Material DEF='blackMaterial' diffuseColor='0 0 0' specularColor='0 0 0' transparency='0.5'/>
+                            </Appearance>
+                        </Shape>
+                    </Transform>
+                </Replicator>
+                <Replicator DEF='whiteRects'>
+                    <Transform rotation='1 0 0 1.571' containerField='child'>
+                        <Shape>
+                            <Rectangle2D size='1 1' />
+                            <Appearance>
+                                <Material DEF='whiteMaterial' diffuseColor='1 1 1' specularColor='0 0 0' transparency='0.5'/>
+                            </Appearance>
+                        </Shape>
+                    </Transform>
+                </Replicator>
+                
+            </Transform>
+            
+      
+            <Script DEF='assignRectsScript' mustEvaluate="true" directOutput="true">
+                <field accessType='initializeOnly' name='markerBase'   type='SFNode' >
+                    <Transform USE='markerBase'/>
+                </field>
+                <field accessType='initializeOnly' name='blackRects'   type='SFNode' >
+                    <Replicator USE='blackRects'/>
+                </field>
+                <field accessType='initializeOnly' name='blackMaterial'   type='SFNode' >
+                    <Material USE='blackMaterial'/>
+                </field>                 
+                <field accessType='initializeOnly' name='whiteRects'   type='SFNode' >
+                    <Replicator USE='whiteRects'/>
+                </field>
+                <field accessType='initializeOnly' name='whiteMaterial'   type='SFNode' >
+                    <Material USE='whiteMaterial'/>
+                </field>                
+                <field accessType='inputOutput' name='id'   type='SFInt32' value='1'  />
+                <field accessType='inputOutput' name='size' type='SFFloat' value='0.1'/>
+                <field accessType='inputOutput' name='detectedMarkerIDs' type='MFInt32' value=''/>
+                <IS>
+                    <connect nodeField='id'   protoField='id'  />
+                    <connect nodeField='size' protoField='size'/>
+                </IS>
+          
+                <![CDATA[javascript:
+  
+  					function initialize() { 
+                        // Set position of each rectangle
+                        positions = new Array();
+                        var x = -3;
+                        var z = -3;
+                        for (var i = 0; i < 7; ++i) {
+                            positions[i] = new Array();
+                            for (var j = 0; j < 7; ++j) {
+                                positions[i][j] = new SFVec3f(x, 0, z);
+                                ++x;
+                            }
+                            x = -3;
+                            ++z;
+                        }
+                        setSize();
+                        setColors();
+                    }
+                    
+                    function size() {
+                        setSize();
+                    }
+                    
+                    function id() {
+                        setColors();
+                    }
+                    
+                    function setSize() {
+                        markerBase.scale = new SFVec3f(size/7, size/7, size/7);
+                    }
+                    
+                    function setColors() {
+                    
+                        blackCoords = new MFVec3f();
+                        whiteCoords = new MFVec3f();
+                    
+                        // Calculate bits
+                        bitCode = id.toString(2);
+                        print("BitCode: " + bitCode);
+                        bits = new Array();
+                        var i;
+                        var bitCodeIndex = bitCode.length - 1;
+                        for (i = 9; i >=0; --i) {
+                            if (bitCodeIndex >= 0) {
+                                bits[i] = parseInt(bitCode[bitCodeIndex]);
+                            } else {
+                                bits[i] = 0;
+                            }
+                            //print("  Bit " + i + ": " + bits[i]);
+                            --bitCodeIndex;
+                        }
+                        
+                        // Fill lines
+                        lines = new Array();
+                        for (i = 0; i < 10; i+=2) {
+                            var ind = i/2;
+                            
+                            lines[ind] = new Array();
+                            lines[ind][0] = 0;
+                            lines[ind][1] = !bits[i];
+                            lines[ind][2] = bits[i];
+                            lines[ind][3] = bits[i+1];
+                            lines[ind][4] = bits[i+1];
+                            lines[ind][5] = bits[i] != bits[i+1];
+                            lines[ind][6] = 0;
+                            //print("  Line " + (ind) + ": " + lines[ind]);
+                            
+                            // Assign positions to black and white rectangles
+                            for (var j = 0; j < 7; ++j) { 
+                                if (lines[ind][j]) {
+                                    whiteCoords[whiteCoords.length] = positions[ind+1][j];
+                                } else {
+                                    blackCoords[blackCoords.length] = positions[ind+1][j];
+                                }
+                            }
+                        }
+                        for (var j = 0; j < 7; ++j) {  // first black line
+                            blackCoords[blackCoords.length] = positions[0][j];
+                            blackCoords[blackCoords.length] = positions[6][j];
+                        }
+                        
+                        blackRects.coord = blackCoords;
+                        whiteRects.coord = whiteCoords;
+                    }
+                    
+                    function detectedMarkerIDs( value ) {
+                    	if( value ) {
+                    		var found = false;
+                    		//print("Searching " + id + " in " + value );
+                    		for( var x = 0; x < value.length && !found; x++ ) {
+                    			if( id == value[x] ) {
+                    				whiteMaterial.diffuseColor = SFColor( 0, 1, 0 );
+                    				found = true;
+                    				//print("Found");
+                    			}
+                    		}
+                    		if( !found ) 
+                    				whiteMaterial.diffuseColor = SFColor( 1, 0, 0 );
+                    	}
+                    }
+            
+                ]]>
+            </Script>
+  
+  
+  					<!-- This EventTunnel is used to get the current tracking data -->
+  					<EventTunnel DEF='MarkerTrackingEvents' label='MarkerTrackingEvents'>
+      				<field name='detectedMarkerIDs' type='MFInt32' accessType='outputOnly' />
+    				</EventTunnel>
+    				<ROUTE fromNode='MarkerTrackingEvents' fromField='detectedMarkerIDs' toNode='assignRectsScript' toField='detectedMarkerIDs'/>
+
+        </ProtoBody>
+    </ProtoDeclare>
+</X3D>

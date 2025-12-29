@@ -1,0 +1,76 @@
+%YAML:1.0
+
+
+# Marker tracker settings
+config: !!MarkerTrackerConfig
+    debugging: 0
+    useMedianFlow: 0
+    decayTime: 5000
+    minContourLengthAllowed: 10.0
+    roiScalePrior: 2.0
+    roiScaleRefinement: 1.3
+    minMarkerSizeInPixels: 8
+    maxNumberOfMarkers: 50
+    markerSizePixels: [100, 100]
+    markerSize: [0.084, 0.084]
+    markerBodies: !!MarkerBody
+        - name: "cube"
+          isStatic: 0
+          markers:
+              - { id:21,  size:0.05566, position:[0.0355, 0, 0],  orientation:[0.57735, -0.57735, 0.57735, 2.0944] }
+              - { id:202, size:0.05566, position:[0, -0.0355, 0], orientation:[0, -0.707107, 0.707107, 3.14159] }
+              - { id:683, size:0.05566, position:[-0.0355, 0, 0], orientation:[0.57735, 0.57735, -0.57735, 2.0944] }
+              - { id:100,  size:0.05566, position:[0, 0.0355, 0], orientation:[1, 0, 0, 1.57] }
+              - { id:302, size:0.05566, position:[0, 0, -0.0355], orientation:[-0.707107, 0.707107, 0, 3.14159] }
+              - { id:485, size:0.05566, position:[0, 0, 0.0355],  orientation:[0, 0, 1, -1.57] }
+        - name: "cube1"
+          isStatic: 0
+          markers:
+              - { id:344, size:0.05566, position:[0.0355, 0, 0],  orientation:[0.57735, -0.57735, 0.57735, 2.0944] }
+              - { id:308,  size:0.05566, position:[0, -0.0355, 0], orientation:[0, -0.707107, 0.707107, 3.14159] }
+              - { id:272,  size:0.05566, position:[-0.0355, 0, 0], orientation:[0.57735, 0.57735, -0.57735, 2.0944] }
+              - { id:384, size:0.05566, position:[0, 0.0355, 0],  orientation:[1, 0, 0, 1.57] }
+              - { id:436, size:0.05566, position:[0, 0, -0.0355], orientation:[-0.707107, 0.707107, 0, 3.14159] }
+              - { id:475, size:0.05566, position:[0, 0, 0.0355],  orientation:[0, 0, 1, -1.57] }
+        - name: "cube2"
+          isStatic: 0
+          markers:
+              - { id:68, size:0.05566, position:[0.0355, 0, 0],  orientation:[0.57735, -0.57735, 0.57735, 2.0944] }
+              - { id:16,  size:0.05566, position:[0, -0.0355, 0], orientation:[0, -0.707107, 0.707107, 3.14159] }
+              - { id:425,  size:0.05566, position:[-0.0355, 0, 0], orientation:[0.57735, 0.57735, -0.57735, 2.0944] }
+              - { id:257, size:0.05566, position:[0, 0.0355, 0],  orientation:[1, 0, 0, 1.57] }
+              - { id:562, size:0.05566, position:[0, 0, 0.0355],  orientation:[0, 0, 1, -1.57] }         
+              - { id:766, size:0.05566, position:[0, 0, -0.0355], orientation:[-0.707107, 0.707107, 0, 3.14159] }
+        - name: "cube3"
+          isStatic: 0
+          markers:
+              - { id:671, size:0.05566, position:[0.0355, 0, 0],  orientation:[0.57735, -0.57735, 0.57735, 2.0944] }
+              - { id:721,  size:0.05566, position:[0, -0.0355, 0], orientation:[0, -0.707107, 0.707107, 3.14159] }
+              - { id:771,  size:0.05566, position:[-0.0355, 0, 0], orientation:[0.57735, 0.57735, -0.57735, 2.0944] }
+              - { id:621, size:0.05566, position:[0, 0.0355, 0],  orientation:[1, 0, 0, 1.57] }
+              - { id:571, size:0.05566, position:[0, 0, 0.0355],  orientation:[0, 0, 0, 0] }                
+              - { id:521, size:0.05566, position:[0, 0, -0.0355], orientation:[0, 1, 0, -3.14159] }
+        - name: "cube4"
+          isStatic: 0
+          markers:
+              - { id:5, size:0.05566, position:[0.0355, 0, 0],  orientation:[0.57735, -0.57735, 0.57735, 2.0944] }
+              - { id:44,  size:0.05566, position:[0, -0.0355, 0], orientation:[0, -0.707107, 0.707107, 3.14159] }
+              - { id:18,  size:0.05566, position:[-0.0355, 0, 0], orientation:[0.57735, 0.57735, -0.57735, 2.0944] }
+              - { id:31, size:0.05566, position:[0, 0.0355, 0],  orientation:[1, 0, 0, 1.57] }
+              - { id:70, size:0.05566, position:[0, 0, -0.0355],  orientation:[1, 0, 0, 3.141] }                
+              - { id:57, size:0.05566, position:[0, 0, 0.0355], orientation:[0, 0, 1, 3.141] }
+        - name: "cube5"
+          isStatic: 0
+          markers:
+              - { id:4, size:0.05566, position:[0.0355, 0, 0],  orientation:[0.57735, -0.57735, 0.57735, 2.0944] }
+              - { id:43,  size:0.05566, position:[0, -0.0355, 0], orientation:[0, -0.707107, 0.707107, 3.14159] }
+              - { id:17,  size:0.05566, position:[-0.0355, 0, 0], orientation:[0.57735, 0.57735, -0.57735, 2.0944] }
+              - { id:30, size:0.05566, position:[0, 0.0355, 0],  orientation:[1, 0, 0, 1.57] }
+              - { id:69, size:0.05566, position:[0, 0, -0.0355],  orientation:[1, 0, 0, 3.141] }                
+              - { id:56, size:0.05566, position:[0, 0, 0.0355], orientation:[0, 0, 1, 3.141] }
+    cameras: 
+        - name: "cam1"
+          isStatic: 1
+          calibrationUrl: "out_camera_data_IntelGestureCam_1280x720.xml"
+              
+              

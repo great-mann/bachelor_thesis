@@ -1,0 +1,27 @@
+# ### Bielefeld AR Tracker INSTANTIO connection ###
+# ===============================
+# 
+# Sets required variables for finding bart library:
+#
+# BART_INSTANTIO_FOUND
+# BART_INSTANTIO_INCLUDE_DIRS
+# BART_INSTANTIO_LIBRARY_DIRS
+# BART_INSTANTIO_LIBRARIES
+# BART_INSTANTIO_VERSION
+# 
+# Example:
+# find_package(bart_iio 0.1)
+#
+# ###############################################################################
+
+INCLUDE(FindPkgConfig)
+
+GET_FILENAME_COMPONENT(CONFIG_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+
+SET(BART_INSTANTIO_FOUND TRUE)
+SET(BART_INSTANTIO_INCLUDE_DIRS "${CONFIG_DIR}/../../include/@BART_INSTANTIO_PACKAGE@")
+SET(BART_INSTANTIO_LIBRARY_DIRS "${CONFIG_DIR}/../../lib")
+SET(BART_INSTANTIO_VERSION "@BART_VERSION@")
+SET(BART_INSTANTIO_LIBRARIES "${CONFIG_DIR}/../../lib/@CMAKE_SHARED_LIBRARY_PREFIX@@BART_LIBNAME@@CMAKE_SHARED_LIBRARY_SUFFIX@")
+
+# TODO: find dependencies here and append their include dirs to BART_INSTANTIO_INCLUDE_DIRS

@@ -1,0 +1,71 @@
+%YAML:1.0
+
+
+# Marker tracker settings
+config: !!MarkerTrackerConfig
+    # Switch debug output on/off
+    debugging: 0 
+    # Switch output of debug images on/off
+    debug_images: 1
+    # Time per frame until marker search is interrupted
+    timeout: 50
+    # Times the input image is scaled to find markers quicker
+    scales: 2
+    # Scaling factor. 
+    # E.g.: Input image with 1920x1080, scales=2, downScaleFactor=0.5 
+    #       --> 1st scale=480x270, 2nd scale=960x540, 3rd scale=full
+    downScaleFactor: 0.5
+    # Use median flow tracking (currently quite slow, but markers can be partly occluded)
+    useMedianFlow: 0
+    # Time until detected markers are forgotten
+    decayTime: 5000
+    # Minimal length of a marker contour in pixels
+    minContourLengthAllowed: 10.0
+    # Scale-up for tracking. 
+    #  If a marker was found in the last frame, it is looked for again in a window of marker size x roiScalePrior
+    roiScalePrior: 1.3
+    # Scale-up for refinement when a marker was detected in a downscaled image
+    roiScaleRefinement: 1.3
+    # Minimal length of an edge of a marker in pixels
+    minMarkerSizeInPixels: 8
+    # Maximal amount of markers to detect in one frame.
+    # -> Note: If you only need one or a few markers, setting this will bring lots of speed!
+    maxNumberOfMarkers: 50
+    # Projection size of a marker, does not have to be altered
+    markerSizePixels: [100, 100]
+    # Default size of unknown markers
+    markerSize: [0.084, 0.084]
+    # Dejittering: If a tracked marker corner has shifted max 5 pixels, damp the movement
+    dejitterEpsilon: 5
+    # Damping factor for dejittering
+    dejitterDamping: 0.05
+    
+    # A sample marker body, a cube of markers
+    markerBodies: !!MarkerBody
+        - name: "cube"
+          isStatic: 0
+          markers:
+              - { id:21,  size:0.05566, position:[0.0355, 0, 0],  orientation:[0.57735, -0.57735, 0.57735, 2.0944] }
+              - { id:202, size:0.05566, position:[0, -0.0355, 0], orientation:[0, -0.707107, 0.707107, 3.14159] }
+              - { id:683, size:0.05566, position:[-0.0355, 0, 0], orientation:[0.57735, 0.57735, -0.57735, 2.0944] }
+              - { id:100,  size:0.05566, position:[0, 0.0355, 0], orientation:[1, 0, 0, 1.57] }
+              - { id:302, size:0.05566, position:[0, 0, -0.0355], orientation:[-0.707107, 0.707107, 0, 3.14159] }
+              - { id:485, size:0.05566, position:[0, 0, 0.0355],  orientation:[0, 0, 1, -1.57] }
+    # Markers that are known but not structured in a body
+    singleMarkers: 
+        - { id: 50, size:0.08, isStatic: 1 }
+        - { id: 51, size:0.08, isStatic: 1 }
+        - { id: 52, size:0.08, isStatic: 1 }
+        - { id: 53, size:0.08, isStatic: 1 }    
+        - { id: 54, size:0.18, isStatic: 1 }
+        
+    # Cameras. 
+    cameras: 
+        # If there only is one, call it default
+        - name: "default"
+          # If the camera is static, it is assumed to not move around in the world
+          isStatic: 1
+          # URL of the camera calibration
+          calibrationUrl: "out_camera_data_IntelGestureCam_1280x720.xml"
+              
+              

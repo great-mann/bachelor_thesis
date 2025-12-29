@@ -1,0 +1,5 @@
+echo 1500000   | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_setspeed
+echo 600000    | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_setspeed
+sudo taskset -c 3 chrt -f 50 ./optimizedMarkerTracker --threshold=adaptive
+sudo taskset -c 3 chrt -f 50 ./optimizedMarkerTracker --threshold=otsu
+

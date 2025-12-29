@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "http://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' profile='Full' version='3.0' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.0.xsd'>
+  
+    <ProtoDeclare name='MillimeterField'>
+        <ProtoInterface>
+            <field accessType='initializeOnly' name='id' type='SFInt32' value='0'   description='Id of the field.'/>
+            <field accessType='inputOnly' name='matrix' type='SFMatrix4f'  description='Detected matrix of the field.'/>
+			<field accessType='inputOutput' name='render' type='SFBool' value='true'  description='Render the object.'/>
+			<field accessType='outputOnly' name='observedObject' type='SFString' description='ID of the observed object.'/>
+        </ProtoInterface>
+
+        <ExternProtoDeclare name='FiducialMarker' url='FiducialMarker.x3d'/>    
+        <ExternProtoDeclare name='ObservableObject' url='ObservableObject_Proto.x3d'/>
+
+        <ProtoBody>
+
+        
+            <Transform DEF='bodyBase'>
+				<IS>
+                    <connect nodeField='render' protoField='render'/>
+                </IS>
+                <MatrixTransform DEF='body' invert='false'>
+                    <IS>
+                        <connect nodeField='matrix' protoField='matrix'/>
+                    </IS>
+                    <Transform scale='0.03 0.03 0.03' >
+                        <Inline url='../cube/axis.x3d' />
+                    </Transform>
+					<Transform DEF='bodyPos'>
+					<Transform DEF='bodyOri'>
+                    <Transform DEF='markerTransform' translation='0.091 -0.1375 0' > <!-- Move field origin to 0 -->
+
+                        <!-- Observable objects -->
+                        <Transform DEF='observableObjectGroup' translation='-0.09 0.14 0'/> <!-- Adapt translation to field size -->
+    
+                        <!-- The field -->
+                        <Shape DEF='testShape'>
+                            <Rectangle2D size='0.21 0.297'/>
+                            <Appearance>
+                                <ImageTexture DEF="testTexture" url='../../textures/millimeterfield_a4_template.png'/>
+                                <Material DEF='testMaterial' transparency='0.5'/>
+                            </Appearance>
+                        </Shape>
+                    </Transform>
+                    <Transform translation='0.03 -0.03 0' rotation='1 0 0 1.571' render='false'>
+                        <FiducialMarker DEF='marker0' id='0' size='0.04'/>
+                    </Transform>
+                    <Transform translation='0.15 -0.03 0' rotation='1 0 0 1.571' render='false'>
+                        <FiducialMarker DEF='marker1' id='0' size='0.04'/>
+                    </Transform>
+                    <Transform translation='0.03 -0.25 0' rotation='1 0 0 1.571' render='false'>
+                        <FiducialMarker DEF='marker2' id='0' size='0.04'/>
+                    </Transform>
+                    <Transform translation='0.15 -0.25 0' rotation='1 0 0 1.571' render='false'> 
+                        <FiducialMarker DEF='marker3' id='0' size='0.04'/>
+                    </Transform>
+					</Transform>
+					</Transform>
+                </MatrixTransform>
+            </Transform>
+                
+			
+            <Script DEF='assignMarkersScript' mustEvaluate="true" directOutput="true">
+                <field accessType='initializeOnly' name='marker0' type='SFNode' >
+                    <Transform USE='marker0'/>
+                </field>
+                <field accessType='initializeOnly' name='marker1' type='SFNode' >
+                    <Transform USE='marker1'/>
+                </field>
+                <field accessType='initializeOnly' name='marker2' type='SFNode' >
+                    <Transform USE='marker2'/>
+                </field>
+                <field accessType='initializeOnly' name='marker3' type='SFNode' >
+                    <Transform USE='marker3'/>
+                </field>
+
+                <field accessType='initializeOnly' name='observableObjectGroup' type='SFNode' >
+                    <Group USE='observableObjectGroup'/>
+                </field>
+
+                <field accessType='initializeOnly' name='id' type='SFInt32' value='0'/>
+                <IS>
+                    <connect nodeField='id' protoField='id'/>
+                </IS>
+				
+				<field accessType='inputOnly' name='pulse' type='SFTime' />
+				<field accessType='outputOnly' name='observedObject' type='SFString' />
+				<IS>
+                    <connect nodeField='observedObject' protoField='observedObject'/>
+                </IS>
+				
+                <![CDATA[javascript:
+  
+  					function initialize() { 
+                        marker0.id = id+1;
+                        marker1.id = 256+id;
+                        marker2.id = 512+id;
+                        marker3.id = 768+id;
+						
+						observableObjects = new MFNode();
+
+                        children_changed();
+                    }
+
+                    function children_changed() {
+						observableObjects = new MFNode();
+                        var theProto = Browser.currentScene.refNode;
+                        var children = theProto.getChildren();
+                        var i = 0;
+						var o = 0;
+                        while (children[i] != null) {
+                            if (children[i].getNodeName() == "objectBase") {
+								var observable = children[i].getParents()[0];
+                                theProto.removeChild(observable);
+                                observableObjectGroup.addChild(observable);
+								observableObjects[o++] = observable;
+                            } 
+                            ++i;
+                        }
+                    }
+					
+					function pulse() {
+						var output = "";
+						var o = 0;
+						while (observableObjects[o] != null) {
+							if (observableObjects[o].isObserved) {
+								output = observableObjects[o].name;
+							}
+							++o;
+						}
+						observedObject = output;
+					}
+
+                ]]>
+            </Script>
+			<TimeSensor DEF='pulseTimer' cycleInterval='0.03' loop='true'/>
+			<ROUTE fromNode='pulseTimer'  fromField='cycleTime' toNode='assignMarkersScript' toField='pulse'/> 
+  
+			<!--MatrixDecomposer DEF='decompMat' >
+				<IS>
+					<connect nodeField='set_matrix' protoField='matrix'/>
+				</IS>
+			</MatrixDecomposer>
+			<PositionDamper DEF='posChaser' tau='0.05'/>
+			<OrientationDamper DEF='oriChaser' tau='0.05'/>
+			<ROUTE fromNode='decompMat'  fromField='translation_changed' toNode='posChaser' toField='set_destination'/> 
+			<ROUTE fromNode='decompMat'  fromField='rotation_changed' toNode='oriChaser' toField='set_destination'/> 
+			<ROUTE fromNode='posChaser'  fromField='value_changed' toNode='bodyPos' toField='translation'/> 
+			<ROUTE fromNode='oriChaser'  fromField='value_changed' toNode='bodyOri' toField='rotation'/--> 
+  
+        </ProtoBody>
+    </ProtoDeclare>
+</X3D>

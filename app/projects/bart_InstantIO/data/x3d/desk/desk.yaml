@@ -1,0 +1,35 @@
+%YAML:1.0
+
+# Marker tracker settings
+config: !!MarkerTrackerConfig
+    debugging: 1
+    decayTime: 5000
+    useMedianFlow: 0
+    minContourLengthAllowed: 32.0
+    roiScalePrior: 2.3
+    roiScaleRefinement: 1.3
+    minMarkerSizeInPixels: 7
+    maxNumberOfMarkers: 6
+    markerSizePixels: [100, 100]
+    markerSize: [0.08, 0.08]
+    markerBodies: !!MarkerBody
+        - name: "cube"
+          isStatic: 0
+          markers:
+              - { id:21,  size:0.05, position:[0.0325, 0, 0],  orientation:[0.57735, -0.57735, 0.57735, 2.0944] }
+              - { id:202, size:0.05, position:[0, -0.0325, 0], orientation:[0, -0.707107, 0.707107, 3.14159] }
+              - { id:683, size:0.05, position:[-0.0325, 0, 0], orientation:[0.57735, 0.57735, -0.57735, 2.0944] }
+              - { id:100,  size:0.05, position:[0, 0.0325, 0], orientation:[1, 0, 0, 1.57] }
+              - { id:302, size:0.05, position:[0, 0, -0.0325], orientation:[-0.707107, 0.707107, 0, 3.14159] }
+              - { id:485, size:0.05, position:[0, 0, 0.0325],  orientation:[0, 0, 1, -1.57] }
+        - name: "base"
+          isStatic: 1
+          markers:
+              - { id:52,  size:0.08, position:[0, 0, 0],  orientation:[1, 0, 0, 3.14] }
+    cameras: 
+        - name: "default"
+          isStatic: 0
+          #calibrationUrl: "/homes/prenner/wbs_home/develop/projects/utilMarkerTracker.lib/projects/utilCameraCalibration.bin/data/xml/out_camera_data_OculusStereoVision_LeftEye_1280x720.xml"
+          calibrationUrl: "/homes/prenner/wbs_home/develop/projects/utilMarkerTracker.lib/projects/utilCameraCalibration.bin/data/xml/out_camera_data_CreativeGestureCamera_1280x720.xml"
+              
+              

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "http://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' profile='Full' version='3.0' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.0.xsd'> 
+    
+    
+    
+    <Scene DEF='scene'>
+		
+        <!-- MarkerTracker IOSensor -->
+        <IOSensor DEF='markerTracker' name='markerTracker' type='irioMarkerTracker' useInternalInput='true' internalWidth='1280' internalHeight='720' flipImage='false'
+              configUrl='w12.yaml' markerCoordinateSystemIsXZ='true'>
+            <field accessType='inputOnly'  name='cameraId'         type='SFString'/>
+            <field accessType='inputOnly'  name='inputImage'        type='SFImage'/>  
+            <field accessType='inputOnly'  name='frameNumber'       type='SFInt32'/>  
+            <field accessType='outputOnly' name='markerMatrizes'    type='MFMatrix4f'/>
+            <field accessType='outputOnly' name='globalCameraTransform' type='SFMatrix4f'/>
+            <field accessType='outputOnly' name='markerIds'         type='MFInt32'/>
+            <field accessType='outputOnly' name='dynamicBodyNames'  type='MFString'/>
+            <field accessType='outputOnly' name='dynamicBodyMatrices' type='MFMatrix4f'/>
+            <field accessType='outputOnly' name='outputImage'       type='SFImage'/>
+			<field accessType='outputOnly' name='outputMarkerImage'       type='SFImage'/>
+            <field accessType='outputOnly' name='fieldOfView'       type='SFFloat'/>
+            <field accessType='outputOnly' name='markerFrameNumber' type='SFInt32'/>
+        </IOSensor>
+
+
+        <!-- Video output background -->
+        <Viewspace>
+            <ImageBackground>
+                <PixelTexture DEF='backgroundTexture'/>
+            </ImageBackground>
+        </Viewspace>
+        <ROUTE fromNode='markerTracker' fromField='outputMarkerImage' toNode='backgroundTexture' toField='image' />
+    
+    
+        <!-- Viewpoint calculation / FoV -->
+        <MatrixTransform DEF='viewTransform' invert='false'>
+            <Viewpoint DEF='view' position='0 0 0' />
+        </MatrixTransform>
+        <!--ROUTE fromNode='markerTracker' fromField='globalCameraTransform' toNode='viewTransform' toField='matrix' /-->
+        <ROUTE fromNode='markerTracker' fromField='fieldOfView'    toNode='view'          toField='fieldOfView' />
+        
+    
+    </Scene>
+</X3D>
+

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "http://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' profile='Full' version='3.0' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.0.xsd'> 
+    
+    
+    
+    <Scene DEF='scene'>
+		
+        <!-- MarkerTracker IOSensor -->
+        <IOSensor DEF='markerTracker' name='markerTracker' type='irioMarkerTracker' useInternalInput='true' internalWidth='1280' internalHeight='720' flipImage='true'
+              configUrl='desk.yaml' markerCoordinateSystemIsXZ='true'>
+            <field accessType='inputOnly'  name='cameraId'         type='SFString'/>
+            <field accessType='inputOnly'  name='inputImage'        type='SFImage'/>  
+            <field accessType='inputOnly'  name='frameNumber'       type='SFInt32'/>  
+            <field accessType='outputOnly' name='markerMatrizes'    type='MFMatrix4f'/>
+            <field accessType='outputOnly' name='globalCameraTransform' type='SFMatrix4f'/>
+            <field accessType='outputOnly' name='markerIds'         type='MFInt32'/>
+            <field accessType='outputOnly' name='dynamicBodyNames'  type='MFString'/>
+            <field accessType='outputOnly' name='dynamicBodyMatrices' type='MFMatrix4f'/>
+            <field accessType='outputOnly' name='outputImage'       type='SFImage'/>
+			<field accessType='outputOnly' name='outputMarkerImage'       type='SFImage'/>
+            <field accessType='outputOnly' name='fieldOfView'       type='SFFloat'/>
+            <field accessType='outputOnly' name='markerFrameNumber' type='SFInt32'/>
+        </IOSensor>
+
+
+        <!-- Video output background -->
+        <Viewspace>
+            <ImageBackground>
+                <PixelTexture DEF='backgroundTexture'/>
+            </ImageBackground>
+        </Viewspace>
+        <ROUTE fromNode='markerTracker' fromField='outputMarkerImage' toNode='backgroundTexture' toField='image' />
+    
+    
+        <!-- Viewpoint calculation / FoV -->
+        <MatrixTransform DEF='viewTransform' invert='false'>
+            <Viewpoint DEF='view' position='0 0 0' fieldOfView='0.78'/>
+        </MatrixTransform>
+        <!--ROUTE fromNode='markerTracker' fromField='globalCameraTransform' toNode='viewTransform' toField='matrix' /-->
+        <ROUTE fromNode='markerTracker' fromField='fieldOfView'    toNode='view'          toField='fieldOfView' />
+    
+        
+        
+        <!-- Init script -->
+        <Script DEF='setMatrices'>
+          <field accessType='inputOnly' name='dynamicBodyNames' type='MFString'/>
+          <field accessType='inputOnly' name='dynamicBodyMatrices' type='MFMatrix4f'/>
+          <field accessType='inputOnly' name='globalCameraTransform' type='SFMatrix4f'/>
+          <field accessType='outputOnly' name='cubeMatrix' type='SFMatrix4f'/>
+          <field accessType='outputOnly' name='renderCube' type='SFBool'/>
+          <field accessType='outputOnly' name='renderTable' type='SFBool'/>
+          
+          <![CDATA[javascript:
+
+            //--------------------
+            function initialize() 
+            {
+                dynBodyNames = MFString();
+                dynBodyMatrices = MFMatrix4f();
+                globalCam = SFMatrix4f();             
+                globalCamOld = SFMatrix4f();      
+				
+				knownFields = new Array();
+            }
+            //--------------------
+
+            function dynamicBodyNames(names) 
+            {
+                dynBodyNames = names;
+				process();
+            }
+
+            function dynamicBodyMatrices(matrices) 
+            {
+                dynBodyMatrices = matrices;
+            }
+            
+            function globalCameraTransform(mat) 
+            {
+                globalCam = mat;
+            }
+          
+            //--------------------
+            function process() 
+            {
+               // print("Looking for dynamic bodies...");
+                var i = 0;
+                var rCube = false;
+                while (dynBodyNames[i] != null && dynBodyNames[i] != "" && dynBodyMatrices[i] != null) {
+                    if (dynBodyNames[i] == "cube") {
+                        cubeMatrix = dynBodyMatrices[i];
+                        rCube = true;
+                    }
+                    ++i;
+                }
+                renderCube = rCube;
+                
+                var oldMat = globalCamOld;
+                var newMat = globalCam;
+                var same = true;
+				var j = 0;
+				var k = 0;
+				while (j < 4) {
+					while (k < 4) { 
+						if (oldMat[j][k] != newMat[j][k]) {
+							same = false;
+							break;
+						}
+						++k;
+					}
+					if (!same) break;
+					++j
+				}
+				
+				if (same) {
+                    renderTable = false;
+                } else {
+                    renderTable = true;
+                    globalCamOld = globalCam;
+                }
+                    
+            }        
+
+         ]]>
+            
+        </Script>
+        <ROUTE fromNode='markerTracker' fromField='dynamicBodyNames' toNode='setMatrices' toField='dynamicBodyNames' />
+        <ROUTE fromNode='markerTracker' fromField='dynamicBodyMatrices' toNode='setMatrices' toField='dynamicBodyMatrices' />
+        <ROUTE fromNode='markerTracker' fromField='globalCameraTransform' toNode='setMatrices' toField='globalCameraTransform' />
+
+
+        
+            
+    
+    </Scene>
+</X3D>
+

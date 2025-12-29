@@ -1,0 +1,19 @@
+
+sudo perf stat -e cycles,instructions,cache-misses,L1-dcache-load-misses   ./optimizedMarkerTracker --threshold=otsu
+
+SUMMARY: AddressSanitizer: 65472 byte(s) leaked in 292 allocation(s).
+
+ Performance counter stats for './optimizedMarkerTracker --threshold=otsu':
+
+   101,015,423,897      cycles                                                                
+    63,545,545,565      instructions                     #    0.63  insn per cycle            
+       273,267,555      cache-misses                                                          
+       273,267,555      L1-dcache-load-misses                                                 
+
+      29.852499265 seconds time elapsed
+
+      51.240542000 seconds user
+      16.642639000 seconds sys
+
+
+eisen@raspberrypi:~/Documents/repos/faster_aruco/app/build $ 

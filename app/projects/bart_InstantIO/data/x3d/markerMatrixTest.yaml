@@ -1,0 +1,34 @@
+%YAML:1.0
+
+# Marker tracker settings
+config: !!MarkerTrackerConfig
+    debugging: 0
+    debug_images: 0
+    decayTime: 5000
+    useMedianFlow: 0
+    minContourLengthAllowed: 10.0
+    roiScalePrior: 1.9
+    roiScaleRefinement: 1.3
+    minMarkerSizeInPixels: 7
+    maxNumberOfMarkers: 4
+    markerSizePixels: [70, 70]
+    markerSize: [0.18, 0.18]
+    dejitterEpsilon: 5
+    dejitterDamping: 0.2
+    markerBodies: !!MarkerBody
+        - name: "body1"
+          isStatic: 0
+          markers:
+              #- { id:42, size:0.08, position:[0, 0, 0], orientation:[0, 0, 0, 1.57] }
+              #- { id:42, size:0.18, position:[0, 0, 0], orientation:[0, 0, 0, 1.57] }
+              #- { id:1022, size:0.04, position:[0.170, 0.247, 0], orientation:[0, 0, 0, 1.57] }
+              - { id:2,  size:0.04, position:[0.03, 0.25, 0], orientation:[0, 0, 0, 1.57] }
+              - { id:257,  size:0.04, position:[0.15, 0.25, 0], orientation:[0, 0, 0, 1.57] }
+              - { id:513, size:0.04, position:[0.03, 0.03, 0], orientation:[0, 0, 0, 1.57] }
+              - { id:769, size:0.04, position:[0.15, 0.03, 0], orientation:[0, 0, 0, 1.57] }
+    cameras: 
+        - name: "default"
+          isStatic: 1
+          calibrationUrl: "/homes/prenner/develop/projects/bart_master/projects/cameraCalibration/data/xml/out_camera_data_CreativeGestureCamera_1280x720.xml"
+              
+              

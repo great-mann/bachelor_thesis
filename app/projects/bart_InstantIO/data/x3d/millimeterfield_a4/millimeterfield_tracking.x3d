@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "http://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' profile='Full' version='3.0' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.0.xsd'> 
+    
+    
+    
+    <Scene DEF='scene'>
+		
+		<!-- Set interaction type to (eye) ray -->
+		<NavigationInfo interactionType='RAY'/>
+    
+        <!-- Network (Eye Tracking) -->
+        <!--IOSensor DEF='eyetrackerNetwork' name='eyetrackerNetwork' type='Network' maxValuesPerTrigger='5' Port='5101' MulticastTTL='2'>
+            <field accessType='outputOnly' name='*directionLeftEye' type='SFVec3f'/>
+            <field accessType='outputOnly' name='*directionRightEye' type='SFVec3f'/>
+            <field accessType='outputOnly' name='*directionBothEyes' type='SFVec3f'/>
+            <field accessType='outputOnly' name='*positionLeftEye' type='SFVec3f'/>
+            <field accessType='outputOnly' name='*positionRightEye' type='SFVec3f'/>
+            <field accessType='outputOnly' name='*positionBothEyes' type='SFVec3f'/>
+            <field accessType='outputOnly' name='*porLeftEye' type='SFVec2f'/>
+            <field accessType='outputOnly' name='*porRightEye' type='SFVec2f'/>
+            <field accessType='outputOnly' name='*porBothEyes' type='SFVec2f'/>
+            <field accessType='outputOnly' name='*pupilDiameterLeftEye' type='SFVec2f'/>
+            <field accessType='outputOnly' name='*pupilDiameterRightEye' type='SFVec2f'/>
+            <field accessType='outputOnly' name='*pupilConfidenceLeftEye' type='SFFloat'/>
+            <field accessType='outputOnly' name='*pupilConfidenceRightEye' type='SFFloat'/>
+            <field accessType='outputOnly' name='*pupilSizeLeftEye' type='SFFloat'/>
+            <field accessType='outputOnly' name='*pupilSizeRightEye' type='SFFloat'/>
+            <field accessType='outputOnly' name='*relativePositionY' type='SFFloat'/> 
+            <field accessType='outputOnly' name='*trackingQuality' type='SFInt32'/>
+            <field accessType='outputOnly' name='*trackingRatioRecent' type='SFInt32'/>
+            <field accessType='outputOnly' name='*trackingRatioTotal' type='SFInt32'/>
+            <field accessType='outputOnly' name='*sceneCameraFrameNumber' type='SFInt32'/>
+            <field accessType='outputOnly' name='*sceneCamera' type='SFImage'/>
+        </IOSensor-->
+		
+		<!--IOSensor DEF='smietSensor' type='irioSMIEyeTracker' sync='false' InstantIONodeAddress='127.0.0.1' InstantIONodePort='5555' ETGServerAddress='127.0.0.1' ETGServerPort='4444'>
+        <field accessType='outputOnly' name='directionLeftEye' type='SFVec3f'/>
+	      <field accessType='outputOnly' name='directionRightEye' type='SFVec3f'/>
+	      <field accessType='outputOnly' name='directionBothEyes' type='SFVec3f'/>
+        <field accessType='outputOnly' name='positionLeftEye' type='SFVec3f'/>
+	      <field accessType='outputOnly' name='positionRightEye' type='SFVec3f'/>
+	      <field accessType='outputOnly' name='positionBothEyes' type='SFVec3f'/>
+        <field accessType='outputOnly' name='porLeftEye' type='SFVec2f'/>
+        <field accessType='outputOnly' name='porRightEye' type='SFVec2f'/>
+        <field accessType='outputOnly' name='porBothEyes' type='SFVec2f'/>
+        <field accessType='outputOnly' name='pupilDiameterLeftEye' type='SFVec2f'/>
+        <field accessType='outputOnly' name='pupilDiameterRightEye' type='SFVec2f'/>
+        <field accessType='outputOnly' name='pupilConfidenceLeftEye' type='SFFloat'/>
+        <field accessType='outputOnly' name='pupilConfidenceRightEye' type='SFFloat'/>
+        <field accessType='outputOnly' name='pupilSizeLeftEye' type='SFFloat'/>
+        <field accessType='outputOnly' name='pupilSizeRightEye' type='SFFloat'/>
+        <field accessType='outputOnly' name='relativePositionY' type='SFFloat'/> 
+        <field accessType='outputOnly' name='trackingQuality' type='SFInt32'/>
+        <field accessType='outputOnly' name='trackingRatioRecent' type='SFInt32'/>
+        <field accessType='outputOnly' name='trackingRatioTotal' type='SFInt32'/>
+        <field accessType='outputOnly' name='sceneCamera' type='SFImage'/>
+        <field accessType='outputOnly' name='sceneCameraFrameNumber' type='SFInt32'/>
+        <field accessType='outputOnly' name='cameraLeftEye' type='SFImage'/>
+        <field accessType='outputOnly' name='cameraRightEye' type='SFImage'/>
+        <field accessType='outputOnly' name='eyeCameraFrameNumber' type='SFInt32'/>
+        <field accessType='inputOnly'  name='trackingMode' type='SFString'/>
+        <field accessType='inputOnly'  name='resolutionSceneCamera' type='SFString'/>
+        <field accessType='inputOnly'  name='resolutionEyeCamera' type='SFString'/>
+        <field accessType='inputOnly'  name='sampleRateSceneCamera' type='SFFloat'/>
+        <field accessType='inputOnly'  name='sampleRateEyeCamera' type='SFFloat'/>
+        <field accessType='inputOnly'  name='whiteBalanceMode' type='SFString'/>
+        <field accessType='inputOnly'  name='calibrationActive' type='SFBool'/>
+        <field accessType='inputOnly'  name='calibrate' type='SFVec2f'/>
+        <field accessType='inputOnly'  name='sceneCameraMode' type='SFString' value='normal_h264'/>
+        <field accessType='inputOnly'  name='eyeCameraMode' type='SFString'/>
+    	</IOSensor-->
+        
+        <Script DEF='gazeDirectionToRotation'> 
+            <field accessType='inputOnly'  name='directionLeftEye' type='SFVec3f'/>
+            <field accessType='inputOnly'  name='directionRightEye' type='SFVec3f'/>
+            <field accessType='outputOnly' name='rotationLeftEye' type='SFRotation'/>
+            <field accessType='outputOnly' name='rotationRightEye' type='SFRotation'/>
+			
+			<field accessType='inputOnly'  name='positionLeftEyeIn' type='SFVec3f'/>
+            <field accessType='inputOnly'  name='positionRightEyeIn' type='SFVec3f'/>
+            <field accessType='outputOnly' name='positionLeftEyeOut' type='SFVec3f'/>
+            <field accessType='outputOnly' name='positionRightEyeOut' type='SFVec3f'/>
+			
+			<field accessType='outputOnly' name='renderLeftEye' type='SFBool'/>
+            <field accessType='outputOnly' name='renderRightEye' type='SFBool'/>
+            
+            <![CDATA[
+              javascript:
+
+                function directionLeftEye(value) {
+					if (!isNaN(value.x)) {
+						rotationLeftEye = dirToRot(value);
+					}
+                }
+                
+                function directionRightEye(value) {
+					if (!isNaN(value.x)) {
+						rotationRightEye = dirToRot(value);
+					}
+                }
+				
+				function positionLeftEyeIn(value) {
+					if (!isNaN(value.x)) {
+						renderLeftEye = true;
+						positionLeftEyeOut = value;
+					} else {
+						renderLeftEye = false;
+					}
+                }
+				
+				function positionRightEyeIn(value) {
+					if (!isNaN(value.x)) {
+						renderRightEye = true;
+						positionRightEyeOut = value;
+					} else {
+						renderRightEye = false;
+					}
+                }
+
+                // transformation dir -> rot
+                function dirToRot(dirVec) {
+                    var normVec = new SFVec3f(0,0,-1);
+                    var axis = normVec.cross(dirVec);
+                    var angle = Math.acos(normVec.dot(dirVec) / (normVec.length() * dirVec.length()));
+                    return new SFRotation(axis.x, axis.y, axis.z, angle);
+                }
+
+            ]]>
+        </Script>
+        <ROUTE fromNode='smietSensor' fromField='directionLeftEye' toNode='gazeDirectionToRotation' toField='directionLeftEye'/>
+        <ROUTE fromNode='smietSensor' fromField='directionRightEye' toNode='gazeDirectionToRotation' toField='directionRightEye'/>
+		<ROUTE fromNode='smietSensor' fromField='positionLeftEye'  toNode='gazeDirectionToRotation'  toField='positionLeftEyeIn'/>
+        <ROUTE fromNode='smietSensor' fromField='positionRightEye' toNode='gazeDirectionToRotation' toField='positionRightEyeIn'/>
+    
+    
+         <Viewspace>
+            <MatrixTransform DEF='headMatrix'>
+                <Transform DEF='leftEyeTransform'>
+                    <Transform DEF='leftEyeRotation'>
+						<UserBody DEF='userbodyLeft'>
+							<Transform DEF='eyeSphereOffsetLeft' translation='0 0 -1.5' rotation='1 0 0 1.57'>
+									<Shape>
+										<Cone height='3' bottomRadius='0.01'/>
+										<Appearance>
+											<Material diffuseColor='0 0 1' transparency='0.5'/>
+										</Appearance>
+									</Shape>
+								
+							</Transform>
+						</UserBody>
+                    </Transform>
+                </Transform>
+                <Transform DEF='rightEyeTransform'>
+                    <Transform DEF='rightEyeRotation'>
+						<UserBody DEF='userbodyRight'>
+							<Transform DEF='eyeSphereOffsetRight' translation='0 0 -1.5' rotation='1 0 0 1.57'>
+								
+									<Shape>
+										<Cone height='3' bottomRadius='0.01'/>
+										<Appearance>
+											<Material diffuseColor='1 0 0' transparency='0.5'/>
+										</Appearance>
+									</Shape>
+								
+							</Transform>
+						</UserBody>
+                    </Transform>
+                </Transform>
+            </MatrixTransform>
+        </Viewspace>
+        <ROUTE fromNode='gazeDirectionToRotation' fromField='positionLeftEyeOut'  toNode='leftEyeTransform'  toField='translation'/>
+        <ROUTE fromNode='gazeDirectionToRotation' fromField='positionRightEyeOut' toNode='rightEyeTransform' toField='translation'/>
+        <ROUTE fromNode='gazeDirectionToRotation' fromField='rotationLeftEye'  toNode='leftEyeRotation'  toField='rotation'/>
+        <ROUTE fromNode='gazeDirectionToRotation' fromField='rotationRightEye' toNode='rightEyeRotation' toField='rotation'/>
+		<ROUTE fromNode='gazeDirectionToRotation' fromField='renderLeftEye'  toNode='leftEyeRotation'  toField='render'/>
+        <ROUTE fromNode='gazeDirectionToRotation' fromField='renderRightEye' toNode='rightEyeRotation' toField='render'/>
+		
+		<!-- Screen cursor -->
+
+		
+		
+		
+		<!--Transform DEF='gazeCursorTrans' scale='1 1 1'>
+			<Shape>
+				<Circle2D radius='5'/>
+				<Appearance>
+					<Material diffuseColor='0 0 1' transparency='0.2'/>
+				</Appearance>
+			</Shape>
+		</Transform>
+		<ROUTE fromNode='smietSensor' fromField='porBothEyes' toNode='gazeCursorTrans' toField='translation'/-->
+    
+        <!-- Webcam IOSensor -->
+        <!--IOSensor DEF='video' type='Video' Device='0' Width='640' Height='480' Format='YUY2' >
+          <field accessType='outputOnly' name='frames' type='SFImage'/>  
+        </IOSensor-->
+        <!--IOSensor DEF='video' type='irioBGRCamera' device='0' >
+          <field accessType='outputOnly'  name='frames' type='SFImage'/>  
+          <field accessType='inputOutput' name='width'  type='SFInt32' value='640'/>  
+          <field accessType='inputOutput' name='height' type='SFInt32' value='480'/>  
+          <field accessType='inputOutput' name='rate'   type='SFInt32' value='15'/>  
+        </IOSensor-->
+  
+        <!-- MarkerTracker IOSensor -->
+        <IOSensor DEF='markerTracker' name='markerTracker' type='bart_iio' useInternalInput='true' internalWidth='1280' internalHeight='720' flipImage='false'
+              configUrl='millimeterfield_a4.yaml' markerCoordinateSystemIsXZ='false'>
+            <field accessType='inputOnly'  name='cameraId'         type='SFString'/>
+            <field accessType='inputOnly'  name='inputImage'        type='SFImage'/>  
+            <field accessType='inputOnly'  name='frameNumber'       type='SFInt32'/>  
+            <field accessType='outputOnly' name='markerMatrizes'    type='MFMatrix4f'/>
+            <field accessType='outputOnly' name='globalCameraTransform' type='SFMatrix4f'/>
+            <field accessType='outputOnly' name='markerIds'         type='MFInt32'/>
+            <field accessType='outputOnly' name='dynamicBodyNames'  type='MFString'/>
+            <field accessType='outputOnly' name='dynamicBodyMatrices' type='MFMatrix4f'/>
+            <field accessType='outputOnly' name='outputImage'       type='SFImage'/>
+			<field accessType='outputOnly' name='outputMarkerImage'       type='SFImage'/>
+            <field accessType='outputOnly' name='fieldOfView'       type='SFFloat'/>
+            <field accessType='outputOnly' name='markerFrameNumber' type='SFInt32'/>
+        </IOSensor>
+        <!--ROUTE fromNode='video' fromField='frames' toNode='markerTracker' toField='inputImage' /-->
+        <!--ROUTE fromNode='smietSensor' fromField='sceneCamera' toNode='markerTracker' toField='inputImage'/-->
+
+
+        <!-- Video output background -->
+        <Viewspace>
+            <ImageBackground>
+                <PixelTexture DEF='backgroundTexture'/>
+            </ImageBackground>
+        </Viewspace>
+        <ROUTE fromNode='markerTracker' fromField='outputMarkerImage' toNode='backgroundTexture' toField='image' />
+    
+    
+        <!-- Viewpoint calculation / FoV -->
+        <MatrixTransform DEF='viewTransform' invert='false'>
+            <Viewpoint DEF='view' position='0 0 0' />
+        </MatrixTransform>
+        <!--ROUTE fromNode='markerTracker' fromField='globalCameraTransform' toNode='viewTransform' toField='matrix' /-->
+        <ROUTE fromNode='markerTracker' fromField='fieldOfView'    toNode='view'          toField='fieldOfView' />
+        
+    
+        <!-- Init script -->
+        <Script DEF='setCamId'>
+          <field accessType='inputOnly' name='dynamicBodyNames' type='MFString'/>
+          <field accessType='inputOnly' name='dynamicBodyMatrices' type='MFMatrix4f'/>
+          <field accessType='outputOnly' name='headMatrix' type='SFMatrix4f'/>
+          <field accessType='outputOnly' name='cameraId' type='SFString'/>
+		  <field accessType='outputOnly' name='cameraMode' type='SFString'/>
+          
+          <![CDATA[javascript:
+
+            //--------------------
+            function initialize() 
+            {
+                cameraId = "ETG";
+				setTimeout("cameraMode = \"normal_h264\"", 3000);
+
+                dynBodyNames = MFString();
+                dynBodyMatrices = MFMatrix4f();
+                
+                lastHeadBody = "";
+				
+				knownFields = new Array();
+            }
+            //--------------------
+
+            function dynamicBodyNames(names) 
+            {
+                dynBodyNames = names;
+				process();
+            }
+
+            function dynamicBodyMatrices(matrices) 
+            {
+                dynBodyMatrices = matrices;
+            }
+          
+            //--------------------
+            function process() 
+            {
+               // print("Looking for dynamic bodies...");
+                var curHeadMatrix;
+                var curHeadBody = "";
+				var curNotSeenFields = knownFields.slice(0);
+				//print(curNotSeenFields);
+				//print(knownFields);
+				var observed = false;
+                var i = 0;
+                while (dynBodyNames[i] != null && dynBodyNames[i] != "" && dynBodyMatrices[i] != null) {
+                    //print("body " + dynBodyNames[i]);
+				    var index = curNotSeenFields.indexOf(dynBodyNames[i]);
+					//print("Index " + index);
+				    if(index == -1) {
+						knownFields.push(dynBodyNames[i]);
+					} else {
+						curNotSeenFields.splice(index, 1);
+					}
+                    if (headMatrix == undefined || lastHeadBody == dynBodyNames[i]) {
+                        curHeadBody = dynBodyNames[i];
+                        curHeadMatrix = dynBodyMatrices[i];
+                    }
+					var millimeterField = Browser.currentScene.getNamedNode("millimeterfield::" + dynBodyNames[i]);
+					var oldMat = millimeterField.matrix;
+					var newMat = dynBodyMatrices[i];
+					
+					var same = true;
+					var j = 0;
+					var k = 0;
+					while (j < 4) {
+						while (k < 4) { 
+							if (oldMat[j][k] != newMat[j][k]) {
+								same = false;
+								break;
+							}
+							++k;
+						}
+						if (!same) break;
+						++j
+					}
+					if (!same) {
+						millimeterField.render = true;
+						millimeterField.matrix = dynBodyMatrices[i];
+						if (millimeterField.observedObject != "") {
+							observed = true;
+							Browser.currentScene.getNamedNode("HUDText").string[0] = "Target ID: " + millimeterField.observedObject;
+						}
+					} else {
+						millimeterField.render = false;
+					}
+					
+                    ++i;
+                }
+				if (!observed) {
+					Browser.currentScene.getNamedNode("HUDText").string[0] = "Target ID: -";
+				}
+				
+				//print(curNotSeenFields);
+				for (var j = 0; j < curNotSeenFields.length; ++j) {
+					//print("Render false: " + curNotSeenFields[j]);
+					Browser.currentScene.getNamedNode("millimeterfield::" + curNotSeenFields[j]).render = false;
+				}
+                if (curHeadMatrix != undefined) {
+                    headMatrix = curHeadMatrix;
+                }
+            }        
+
+         ]]>
+            
+        </Script>
+        <ROUTE fromNode='markerTracker' fromField='dynamicBodyNames' toNode='setCamId' toField='dynamicBodyNames' />
+        <ROUTE fromNode='markerTracker' fromField='dynamicBodyMatrices' toNode='setCamId' toField='dynamicBodyMatrices' />
+        <ROUTE fromNode='setCamId' fromField='headMatrix' toNode='headMatrix' toField='matrix' />
+        <ROUTE fromNode='setCamId' fromField='cameraId' toNode='markerTracker' toField='cameraId' />
+		<ROUTE fromNode='setCamId' fromField='cameraMode' toNode='smietSensor' toField='sceneCameraMode' />
+        
+		<Transform DEF='HUDTrans' translation='0 -0.019 -0.05' >
+			<Transform DEF='HUDBg' translation='0 0 0'>
+				<Shape>
+					<Rectangle2D size='0.07 0.005'/>
+					<Appearance>
+						<Material diffuseColor='0 0 0' />
+					</Appearance>
+				</Shape>
+			</Transform>
+			<Transform DEF='HUDTextTrans' translation='-0.01 -0.0003 0.001' scale='0.003 0.003 1' >
+				<Shape>
+					<Text DEF='HUDText' string='Target ID: - ' >
+						<FontStyle family='SANS' justify='' spacing='1.0' style='PLAIN'  />
+					</Text>
+					<Appearance>
+						<Material diffuseColor='1 1 1' />
+					</Appearance>
+				</Shape>
+			</Transform>
+			<Transform DEF='HUDEyes' >
+				<Transform DEF='HUDEyeLeft' translation='-0.023 0.00035 0'>
+					<Shape DEF='HUDEyeShape'>
+						<Sphere radius='0.002'/>
+						<Appearance>
+							<ImageTexture DEF='eyeTex' url='eye.jpg'/>
+							<Material DEF='eyeMat' diffuseColor='1 1 1' />
+						</Appearance>
+					</Shape>
+				</Transform>
+				<Transform DEF='HUDEyeRight' translation='-0.018 0.00035 0'>
+					<Shape USE='HUDEyeShape'/>
+				</Transform>
+				<ROUTE fromNode='gazeDirectionToRotation' fromField='rotationLeftEye'  toNode='HUDEyeLeft'  toField='rotation'/>
+				<ROUTE fromNode='gazeDirectionToRotation' fromField='rotationRightEye' toNode='HUDEyeRight' toField='rotation'/>
+				
+				<Script DEF='eyeQualityScript'>
+				  <field accessType='inputOnly' name='trackingQuality' type='SFFloat'/>
+				  <field accessType='outputOnly' name='eyeTransparency' type='SFFloat'/>
+				  
+				  <![CDATA[javascript:
+
+					function trackingQuality(quality) {
+						if (quality == -1) {
+							eyeTransparency = 0.8
+						}
+						eyeTransparency = 0.9 - (quality / 100.0);
+					}
+
+				 ]]>
+					
+				</Script>
+				<ROUTE fromNode='smietSensor' fromField='trackingQuality' toNode='eyeQualityScript' toField='trackingQuality'/>
+				<ROUTE fromNode='eyeQualityScript' fromField='eyeTransparency' toNode='eyeMat' toField='transparency'/>
+			</Transform>
+		</Transform>
+    
+    </Scene>
+</X3D>
+

@@ -1,0 +1,51 @@
+%YAML:1.0
+
+# Marker tracker settings
+config: !!MarkerTrackerConfig
+    debugging: 1
+    decayTime: 5000
+    useMedianFlow: 0
+    minContourLengthAllowed: 32.0
+    roiScalePrior: 2.3
+    roiScaleRefinement: 1.3
+    minMarkerSizeInPixels: 7
+    maxNumberOfMarkers: 4
+    markerSizePixels: [100, 100]
+    markerSize: [0.08, 0.08]
+    markerBodies: !!MarkerBody
+        - name: "w12"
+          isStatic: 1
+          markers:
+              - { id:358,  size:0.032, position:[0, 0, 0], orientation:[1, 0, 0, 3.14] }
+              # From here, marker transformations are learned relative to marker 358
+              #- { id:17,  size:0.032, position:[-0.0382195, 0.000797489, 0.0532061], orientation:[1.44106, -0.360454, 0.726878, 0.584569] }
+              #- { id:48,  size:0.032, position:[-0.013342, -0.0317133, 0.0580151], orientation:[1.2451, -0.8886, 0.00836651, 0.458606] }
+              #- { id:79,  size:0.032, position:[0.0258085, -0.01488, 0.0575684], orientation:[1.42879, -0.693405, -0.362404, -0.622778] }
+              #- { id:110,  size:0.032, position:[0.0248818, 0.0182701, 0.0570759], orientation:[2.09763, -0.190681, -0.584957, -0.788331] }
+              #- { id:141,  size:0.032, position:[-0.0111776, 0.0320808, 0.0584455], orientation:[2.87019, -0.0935134, 0.528624, 0.843689] }
+              #- { id:172,  size:0.032, position:[-0.00328607, 0.00150811, 0.0750219], orientation:[1.85968, -0.0116101, 0.0112304, 0.99987] }
+              #- { id:203,  size:0.032, position:[0.0080188, -0.0329066, 0.0235928], orientation:[2.07875, -0.794112, -0.576707, 0.191824] }
+              #- { id:234,  size:0.032, position:[0.0324762, -0.000429856, 0.0217528], orientation:[2.68, -0.782441, -0.398638, -0.478408] }
+              #- { id:265,  size:0.032, position:[0.0076686, 0.0344388, 0.021886], orientation:[2.79968, 0.507418, 0.696125, 0.507875] }
+              #- { id:296,  size:0.032, position:[-0.0312064, 0.020285, 0.0218224], orientation:[2.25835, -0.00722425, 0.938539, 0.345096] }
+              #- { id:327,  size:0.032, position:[-0.0267522, -0.0192553, 0.0192978], orientation:[2.09333, -0.800249, 0.570795, 0.183832] }
+    singleMarkers: 
+        - { id: 265, size:0.032, isStatic: 1 }
+        - { id: 234, size:0.032, isStatic: 1 }
+        - { id: 79, size:0.032, isStatic: 1 }
+        - { id: 172, size:0.032, isStatic: 1 }
+        - { id: 17, size:0.032, isStatic: 1 }
+        - { id: 327, size:0.032, isStatic: 1 }
+        - { id: 203, size:0.032, isStatic: 1 }
+        - { id: 110, size:0.032, isStatic: 1 }
+        - { id: 141, size:0.032, isStatic: 1 }
+        - { id: 296, size:0.032, isStatic: 1 }
+        - { id: 48, size:0.032, isStatic: 1 }
+        
+    cameras: 
+        - name: "default"
+          isStatic: 0
+          #calibrationUrl: "/homes/prenner/wbs_home/develop/projects/utilMarkerTracker.lib/projects/utilCameraCalibration.bin/data/xml/out_camera_data_OculusStereoVision_LeftEye_1280x720.xml"
+          calibrationUrl: "/homes/prenner/wbs_home/develop/projects/utilMarkerTracker.lib/projects/utilCameraCalibration.bin/data/xml/out_camera_data_CreativeGestureCamera_1280x720.xml"
+              
+              

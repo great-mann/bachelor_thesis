@@ -1,0 +1,16 @@
+*.so
+*.o
+build
+*~
+.project
+.cproject
+bin
+*.bak
+docs/latex/ZZ_Temp/main.out
+docs/latex/ZZ_Temp/main.lot
+docs/latex/ZZ_Temp/main.lof
+docs/latex/ZZ_Temp/main.blg
+docs/latex/ZZ_Temp/main.idx
+docs/latex/ZZ_Temp/main.bbl
+docs/latex/ZZ_Temp/main.aux
+docs/latex/ZZ_Temp/main.toc

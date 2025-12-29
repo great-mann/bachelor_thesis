@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.2//EN" "http://www.web3d.org/specifications/x3d-3.2.dtd">
+<X3D profile='Immersive' version='3.2' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.2.xsd'>
+
+    <Scene DEF='scene'>
+        
+        <Transform translation='-3.5 0 0'>
+            <Shape>
+                <Text string='"Eye Tracking Client"'/>
+                <Appearance>
+                    <Material diffuseColor='0 0 0'/>
+                </Appearance>
+            </Shape>
+        </Transform>
+        
+        
+        <!-- Network (Eye Tracking) -->
+        <IOSensor DEF='eyetrackerNetwork' name='eyetrackerNetwork' type='Network' maxValuesPerTrigger='5' Servers='129.70.139.14:5100' Port='5100' MulticastTTL='0'>
+            <field accessType='outputOnly' name='*/directionLeftEye' type='SFVec3f'/>
+            <field accessType='outputOnly' name='*/directionRightEye' type='SFVec3f'/>
+            <field accessType='outputOnly' name='*/directionBothEyes' type='SFVec3f'/>
+            <field accessType='outputOnly' name='*/positionLeftEye' type='SFVec3f'/>
+            <field accessType='outputOnly' name='*/positionRightEye' type='SFVec3f'/>
+            <field accessType='outputOnly' name='*/positionBothEyes' type='SFVec3f'/>
+            <field accessType='outputOnly' name='*/porLeftEye' type='SFVec2f'/>
+            <field accessType='outputOnly' name='*/porRightEye' type='SFVec2f'/>
+            <field accessType='outputOnly' name='*/porBothEyes' type='SFVec2f'/>
+            <field accessType='outputOnly' name='*/pupilDiameterLeftEye' type='SFVec2f'/>
+            <field accessType='outputOnly' name='*/pupilDiameterRightEye' type='SFVec2f'/>
+            <field accessType='outputOnly' name='*/pupilConfidenceLeftEye' type='SFFloat'/>
+            <field accessType='outputOnly' name='*/pupilConfidenceRightEye' type='SFFloat'/>
+            <field accessType='outputOnly' name='*/pupilSizeLeftEye' type='SFFloat'/>
+            <field accessType='outputOnly' name='*/pupilSizeRightEye' type='SFFloat'/>
+            <field accessType='outputOnly' name='*/relativePositionY' type='SFFloat'/> 
+            <field accessType='outputOnly' name='*/trackingQuality' type='SFInt32'/>
+            <field accessType='outputOnly' name='*/trackingRatioRecent' type='SFInt32'/>
+            <field accessType='outputOnly' name='*/trackingRatioTotal' type='SFInt32'/>
+            <field accessType='outputOnly' name='*/sceneCamera'            type='SFImage'/>
+            <field accessType='outputOnly' name='*/sceneCameraFrameNumber' type='SFInt32'/>
+        </IOSensor>
+        
+        <IOSensor DEF='serverOut' name='serverOut' type='Network' Port='5200' maxValuesPerTrigger='5'>
+            <field accessType='inputOnly' name='serverOut_directionLeftEye' type='SFVec3f'/>
+            <field accessType='inputOnly' name='serverOut_directionRightEye' type='SFVec3f'/>
+            <field accessType='inputOnly' name='serverOut_directionBothEyes' type='SFVec3f'/>
+            <field accessType='inputOnly' name='serverOut_positionLeftEye' type='SFVec3f'/>
+            <field accessType='inputOnly' name='serverOut_positionRightEye' type='SFVec3f'/>
+            <field accessType='inputOnly' name='serverOut_positionBothEyes' type='SFVec3f'/>
+            <field accessType='inputOnly' name='serverOut_porLeftEye' type='SFVec2f'/>
+            <field accessType='inputOnly' name='serverOut_porRightEye' type='SFVec2f'/>
+            <field accessType='inputOnly' name='serverOut_porBothEyes' type='SFVec2f'/>
+            <field accessType='inputOnly' name='serverOut_pupilDiameterLeftEye' type='SFVec2f'/>
+            <field accessType='inputOnly' name='serverOut_pupilDiameterRightEye' type='SFVec2f'/>
+            <field accessType='inputOnly' name='serverOut_pupilConfidenceLeftEye' type='SFFloat'/>
+            <field accessType='inputOnly' name='serverOut_pupilConfidenceRightEye' type='SFFloat'/>
+            <field accessType='inputOnly' name='serverOut_pupilSizeLeftEye' type='SFFloat'/>
+            <field accessType='inputOnly' name='serverOut_pupilSizeRightEye' type='SFFloat'/>
+            <field accessType='inputOnly' name='serverOut_relativePositionY' type='SFFloat'/> 
+            <field accessType='inputOnly' name='serverOut_trackingQuality' type='SFInt32'/>
+            <field accessType='inputOnly' name='serverOut_trackingRatioRecent' type='SFInt32'/>
+            <field accessType='inputOnly' name='serverOut_trackingRatioTotal' type='SFInt32'/>
+            <field accessType='inputOnly' name='serverOut_sceneCamera'            type='SFImage' />
+            <field accessType='inputOnly' name='serverOut_sceneCameraFrameNumber' type='SFInt32' />
+        </IOSensor>
+        <ROUTE fromNode='serverIn' fromField='*/directionLeftEye'            toNode='serverOut' toField='serverOut_directionLeftEye' />
+        <ROUTE fromNode='serverIn' fromField='*/directionRightEye'            toNode='serverOut' toField='serverOut_directionRightEye' />
+        <ROUTE fromNode='serverIn' fromField='*/directionBothEyes'            toNode='serverOut' toField='serverOut_directionBothEyes' />
+        <ROUTE fromNode='serverIn' fromField='*/positionLeftEye'            toNode='serverOut' toField='serverOut_positionLeftEye' />
+        <ROUTE fromNode='serverIn' fromField='*/positionRightEye'            toNode='serverOut' toField='serverOut_positionRightEye' />
+        <ROUTE fromNode='serverIn' fromField='*/positionBothEyes'            toNode='serverOut' toField='serverOut_positionBothEyes' />
+        <ROUTE fromNode='serverIn' fromField='*/porLeftEye'            toNode='serverOut' toField='serverOut_porLeftEye' />
+        <ROUTE fromNode='serverIn' fromField='*/porRightEye'            toNode='serverOut' toField='serverOut_porRightEye' />
+        <ROUTE fromNode='serverIn' fromField='*/porBothEyes'            toNode='serverOut' toField='serverOut_porBothEyes' />
+        <ROUTE fromNode='serverIn' fromField='*/pupilDiameterLeftEye'            toNode='serverOut' toField='serverOut_pupilDiameterLeftEye' />
+        <ROUTE fromNode='serverIn' fromField='*/pupilDiameterRightEye'            toNode='serverOut' toField='serverOut_pupilDiameterRightEye' />
+        <ROUTE fromNode='serverIn' fromField='*/pupilConfidenceLeftEye'            toNode='serverOut' toField='serverOut_pupilConfidenceLeftEye' />
+        <ROUTE fromNode='serverIn' fromField='*/pupilConfidenceRightEye'            toNode='serverOut' toField='serverOut_pupilConfidenceRightEye' />
+        <ROUTE fromNode='serverIn' fromField='*/pupilSizeLeftEye'            toNode='serverOut' toField='serverOut_pupilSizeLeftEye' />
+        <ROUTE fromNode='serverIn' fromField='*/pupilSizeRightEye'            toNode='serverOut' toField='serverOut_pupilSizeRightEye' />
+        <ROUTE fromNode='serverIn' fromField='*/relativePositionY'            toNode='serverOut' toField='serverOut_relativePositionY' />
+        <ROUTE fromNode='serverIn' fromField='*/trackingQuality'            toNode='serverOut' toField='serverOut_trackingQuality' />
+        <ROUTE fromNode='serverIn' fromField='*/trackingRatioRecent'            toNode='serverOut' toField='serverOut_trackingRatioRecent' />
+        <ROUTE fromNode='serverIn' fromField='*/trackingRatioTotal'            toNode='serverOut' toField='serverOut_trackingRatioTotal' />
+        <ROUTE fromNode='serverIn' fromField='*/sceneCamera'            toNode='serverOut' toField='serverOut_sceneCamera' />
+        <ROUTE fromNode='serverIn' fromField='*/sceneCameraFrameNumber' toNode='serverOut' toField='serverOut_sceneCameraFrameNumber' />
+        
+    </Scene>
+</X3D>

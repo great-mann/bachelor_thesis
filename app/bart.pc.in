@@ -1,0 +1,14 @@
+#pkg config file for @PROJECT_NAME@
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: @PROJECT_NAME@
+Description: Bielefeld AR Tracker
+Version: 0.1
+Requires: 
+Libs: -L${libdir} -l@PROJECT_NAME@
+Cflags: -I${includedir}
+
+

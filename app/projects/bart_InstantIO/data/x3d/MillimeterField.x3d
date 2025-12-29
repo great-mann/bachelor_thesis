@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile='Immersive'>
+  <Scene name="markers">
+	<Transform DEF="Field" rotation='0 0 0 1.57'>
+	  <Transform translation="0 0 -0.001">
+		<Shape>
+		  <Box size="1.1 0.001 0.9" solid="true"/>
+		  <Appearance DEF="Tisch">
+			<Material diffuseColor="1 1 1" shininess="0.2" transparency='0.9'/>
+		  </Appearance>
+		</Shape>
+	  </Transform>
+
+		<ExternProtoDeclare name='FiducialMarker' url='FiducialMarker.x3d'/>
+
+	  <!--Marker-->
+	  <Transform DEF="Marker_258" translation="0 0 0" rotation="0 0 0 3.1415926">
+	  	<FiducialMarker id='258' size='0.085'/>
+	  </Transform>
+	  
+	  <!-- First Row -->
+	  <Transform DEF="Marker_38" translation="-0.45 0 -0.35" rotation="0 0 0 3.1415926">
+	  	<FiducialMarker id='38' size='0.085'/>
+	  </Transform>
+	  <Transform DEF="Marker_42" translation="-0.15 0 -0.35" rotation="0 0 0 3.1415926">
+	  	<FiducialMarker id='42' size='0.085'/>
+	  </Transform>
+	  <Transform DEF="Marker_49" translation="0.15 0 -0.35" rotation="0 0 0 3.1415926">
+	  	<FiducialMarker id='49' size='0.085'/>
+	  </Transform>
+	  <Transform DEF="Marker_75" translation="0.45 0 -0.35" rotation="0 0 0 3.1415926">
+	  	<FiducialMarker id='75' size='0.085'/>
+		</Transform>
+	  <!-- Second Row -->
+	  <Transform DEF="Marker_173" translation="-0.45 0 -0.15" rotation="0 0 0 3.1415926">
+	  	<FiducialMarker id='173' size='0.085'/>
+		</Transform>
+
+	  <Transform DEF="Marker_213" translation="0.45 0 -0.15" rotation="0 0 0 3.1415926">
+	  	<FiducialMarker id='213' size='0.085'/>
+		</Transform>
+	  <!-- Third Row -->
+	  <Transform DEF="Marker_250" translation="-0.45 0 0.15" rotation="0 0 0 3.1415926">
+	  	<FiducialMarker id='250' size='0.085'/>
+		</Transform>
+
+	  <Transform DEF="Marker_346" translation="0.45 0 0.15" rotation="0 0 0 3.1415926">
+	  	<FiducialMarker id='346' size='0.085'/>
+		</Transform>
+	  <!-- Fourth Row -->
+	  <Transform DEF="Marker_535" translation="-0.45 0 0.35" rotation="0 0 0 3.1415926">
+	  	<FiducialMarker id='535' size='0.085'/>
+		</Transform>
+
+	  <Transform DEF="Marker_773" translation="-0.15 0 0.35" rotation="0 0 0 3.1415926">
+	  	<FiducialMarker id='773' size='0.085'/>
+		</Transform>
+
+	  <Transform DEF="Marker_981" translation="0.15 0 0.35" rotation="0 0 0 3.1415926">
+	  	<FiducialMarker id='981' size='0.085'/>
+	  </Transform>
+
+	  <Transform DEF="Marker_335" translation="0.45 0 0.35" rotation="0 0 0 3.1415926">
+	  	<FiducialMarker id='335' size='0.085'/>
+	  </Transform>
+	
+		<!-- Smaller Area in the Center -->
+	  <Transform DEF="Marker_66" translation="-0.275 0 -0.175" rotation="0 0 0 3.1415926">
+	  	<FiducialMarker id='66' size='0.0425'/>
+	  </Transform>
+		<Transform DEF="Marker_274" translation="-0.075 0 -0.175" rotation="0 0 0 3.1415926">
+	  	<FiducialMarker id='274' size='0.0425'/>
+	  </Transform>	
+		<Transform DEF="Marker_373" translation="0.075 0 -0.175" rotation="0 0 0 3.1415926">
+	  	<FiducialMarker id='373' size='0.0425'/>
+	  </Transform>	
+		<Transform DEF="Marker_89" translation="0.275 0 -0.175" rotation="0 0 0 3.1415926">
+	  	<FiducialMarker id='89' size='0.0425'/>
+	  </Transform>	
+
+	  <Transform DEF="Marker_58" translation="-0.275 0 -0.075" rotation="0 0 0 3.1415926">
+	  	<FiducialMarker id='58' size='0.0425'/>
+	  </Transform>
+		<Transform DEF="Marker_98" translation="0.275 0 -0.075" rotation="0 0 0 3.1415926">
+	  	<FiducialMarker id='98' size='0.0425'/>
+	  </Transform>	
+
+	  <Transform DEF="Marker_112" translation="-0.275 0 0.075" rotation="0 0 0 3.1415926">
+	  	<FiducialMarker id='112' size='0.0425'/>
+	  </Transform>
+		<Transform DEF="Marker_195" translation="0.275 0 0.075" rotation="0 0 0 3.1415926">
+	  	<FiducialMarker id='195' size='0.0425'/>
+	  </Transform>	
+
+	  <Transform DEF="Marker_126" translation="-0.275 0 0.175" rotation="0 0 0 3.1415926">
+	  	<FiducialMarker id='126' size='0.0425'/>
+	  </Transform>
+		<Transform DEF="Marker_166" translation="-0.075 0 0.175" rotation="0 0 0 3.1415926">
+	  	<FiducialMarker id='166' size='0.0425'/>
+	  </Transform>	
+		<Transform DEF="Marker_234" translation="0.075 0 0.175" rotation="0 0 0 3.1415926">
+	  	<FiducialMarker id='234' size='0.0425'/>
+	  </Transform>	
+		<Transform DEF="Marker_138" translation="0.275 0 0.175" rotation="0 0 0 3.1415926">
+	  	<FiducialMarker id='138' size='0.0425'/>
+	  </Transform>	
+	</Transform>
+	
+	
+	
+  </Scene>
+</X3D>

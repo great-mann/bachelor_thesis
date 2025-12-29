@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile='Immersive'>
+
+
+	<Scene>
+
+<!--
+		<Shape>
+			<Text string="Hello world!">
+				<FontStyle justify="MIDDLE" />
+			</Text>
+		</Shape>
+-->
+
+		<Transform>
+			<Group>
+				<Shape>
+					<Cylinder radius="0.05" height="5" />
+				  <Appearance DEF="GreenColor">          
+					  <Material diffuseColor="0 1 0" shininess="0.2" />
+				  </Appearance>
+				</Shape>   
+				<Transform translation="0 2.7 0">
+					<Shape>
+						<Cone bottomRadius="0.09" height="0.4" />
+					  <Appearance USE="GreenColor" />
+					</Shape>
+				</Transform>
+				<Transform translation="0 -2.7 0" rotation="0 0 1 3.142">
+					<Shape>
+						<Cone bottomRadius="0.09" height="0.4" />
+					  <Appearance USE="GreenColor" />
+					</Shape>       
+				</Transform>
+			</Group>
+		</Transform>
+
+		<Transform translation="0 3 0">
+			<Billboard axisOfRotation="0 0 0">
+				<Shape>
+					<Text string="Y">
+						<FontStyle DEF="LabelStyle" justify="MIDDLE" size="0.4"/>
+					</Text>
+				</Shape>
+      </Billboard>
+		</Transform>
+
+		<Transform rotation="1 0 0 1.571">
+			<Shape>
+				<Cylinder radius="0.05" height="5" />
+				<Appearance DEF="BlueColor">
+					<Material diffuseColor="0 0 1" shininess="0.2" />
+				</Appearance>
+			</Shape>
+			<Transform translation="0 2.7 0">
+				<Shape>
+					<Cone bottomRadius="0.09" height="0.4" />
+					<Appearance USE="BlueColor" />
+				</Shape>
+			</Transform>
+			<Transform translation="0 -2.7 0" rotation="0 0 1 3.142">
+				<Shape>
+					<Cone bottomRadius="0.09" height="0.4" />
+					<Appearance USE="BlueColor" />
+				</Shape>
+			</Transform>
+		</Transform>
+		<Transform translation="0 0 3">
+			<Billboard axisOfRotation="0 0 0">
+				<Shape>
+					<Text string="Z">
+						<FontStyle USE="LabelStyle" />
+					</Text>
+				</Shape>
+			</Billboard>
+		</Transform>
+
+		<Transform rotation="0 0 1 1.571">
+			<Shape>
+				<Cylinder radius="0.05" height="5" />
+				<Appearance DEF="RedColor">
+					<Material diffuseColor="1 0 0" shininess="0.2" />
+				</Appearance>
+			</Shape>
+			<Transform translation="0 2.7 0">
+				<Shape>
+					<Cone bottomRadius="0.09" height="0.4" />
+					<Appearance USE="RedColor" />
+				</Shape>
+			</Transform>
+			<Transform translation="0 -2.7 0" rotation="0 0 1 3.142">
+				<Shape>
+					<Cone bottomRadius="0.09" height="0.4" />
+					<Appearance USE="RedColor" />
+				</Shape>
+			</Transform>
+		</Transform>
+		<Transform translation="3 0 0">
+			<Billboard axisOfRotation="0 0 0">
+				<Shape>
+					<Text string="X">
+						<FontStyle USE="LabelStyle" />
+					</Text>
+				</Shape>
+			</Billboard>
+		</Transform>
+
+	</Scene>
+</X3D>

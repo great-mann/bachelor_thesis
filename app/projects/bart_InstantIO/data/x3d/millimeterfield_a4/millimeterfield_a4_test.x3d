@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "http://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' profile='Full' version='3.0' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.0.xsd'> 
+    
+    <Engine>
+    <RenderJob>
+      <WindowGroup DEF='defaultWindowGroup'>
+        <LocalWindow DEF='defaultWindow' size='1280.0 760.0' position='200 200'/> 
+      </WindowGroup>
+    </RenderJob>
+  </Engine>
+    
+    
+    <Scene DEF='scene'>
+    
+        <!-- Webcam IOSensor -->
+        <!--IOSensor DEF='video' type='Video' Device='0' Width='640' Height='480' Format='YUY2' >
+          <field accessType='outputOnly' name='frames' type='SFImage'/>  
+        </IOSensor-->
+        <!--IOSensor DEF='video' type='irioBGRCamera' device='0' >
+          <field accessType='outputOnly'  name='frames' type='SFImage'/>  
+          <field accessType='inputOutput' name='width'  type='SFInt32' value='640'/>  
+          <field accessType='inputOutput' name='height' type='SFInt32' value='480'/>  
+          <field accessType='inputOutput' name='rate'   type='SFInt32' value='15'/>  
+        </IOSensor-->
+  
+        <!-- MarkerTracker IOSensor -->
+        <IOSensor DEF='markerTracker' name='markerTracker' type='irioMarkerTracker' useInternalInput='true' internalWidth='1280' internalHeight='720' flipImage='false'
+              configUrl='millimeterfield_a4_test.yaml'
+              downScaleFactor='0.5' scales='3' useLastFrameAsPrior='false'>
+            <field accessType='inputOnly'  name='cameraId'         type='SFString'/>
+            <field accessType='inputOnly'  name='inputImage'        type='SFImage'/>  
+            <field accessType='inputOnly'  name='frameNumber'       type='SFInt32'/>  
+            <field accessType='outputOnly' name='markerMatrizes'    type='MFMatrix4f'/>
+            <field accessType='outputOnly' name='globalCameraTransform' type='SFMatrix4f'/>
+            <field accessType='outputOnly' name='markerIds'         type='MFInt32'/>
+            <field accessType='outputOnly' name='dynamicBodyNames'  type='MFString'/>
+            <field accessType='outputOnly' name='dynamicBodyMatrices' type='MFMatrix4f'/>
+            <field accessType='outputOnly' name='outputImage'       type='SFImage'/>
+            <field accessType='outputOnly' name='fieldOfView'       type='SFFloat'/>
+            <field accessType='outputOnly' name='markerFrameNumber' type='SFInt32'/>
+        </IOSensor>
+        <!--ROUTE fromNode='video' fromField='frames' toNode='markerTracker' toField='inputImage' /-->
+
+
+
+
+        <Viewspace>
+            <ImageBackground>
+                <PixelTexture DEF='backgroundTexture'/>
+            </ImageBackground>
+        </Viewspace>
+        <ROUTE fromNode='markerTracker' fromField='outputImage' toNode='backgroundTexture' toField='image' />
+    
+        <MatrixTransform DEF='viewTransform' invert='false'>
+            <Viewpoint DEF='view' position='0 0 0' />
+        </MatrixTransform>
+        <!--ROUTE fromNode='markerTracker' fromField='globalCameraTransform' toNode='viewTransform' toField='matrix' /-->
+        <ROUTE fromNode='markerTracker' fromField='fieldOfView'    toNode='view'          toField='fieldOfView' />
+        
+        <Transform DEF='testBase'>
+            <MatrixTransform DEF='body1' invert='true'>
+                <Transform DEF='markerTransform' translation='0.091 -0.1375 0' >
+                    <Shape DEF='testShape'>
+                        <Rectangle2D size='0.21 0.297'/>
+                        <Appearance>
+                            <ImageTexture DEF="testTexture" url='../textures/millimeterfield_a4.png'/>
+                            <Material DEF='testMaterial' transparency='0.5'/>
+                        </Appearance>
+                    </Shape>
+                </Transform>
+            </MatrixTransform>
+        </Transform>
+
+    
+    
+        <Script DEF='setCamId'>
+          <field accessType='inputOnly' name='dynamicBodyNames' type='MFString'/>
+          <field accessType='inputOnly' name='dynamicBodyMatrices' type='MFMatrix4f'/>
+          <field accessType='outputOnly' name='cameraId' type='SFString'/>
+          
+          <![CDATA[javascript:
+
+            //--------------------
+            function initialize() 
+            {
+                cameraId = "GestureCam";
+
+                dynBodyNames = MFString();
+                dynBodyMatrices = MFMatrix4f();
+            }
+            //--------------------
+
+            function dynamicBodyNames(names) 
+            {
+                dynBodyNames = names;
+            }
+
+            function dynamicBodyMatrices(matrices) 
+            {
+                dynBodyMatrices = matrices;
+            }
+          
+            //--------------------
+            function eventsProcessed() 
+            {
+                print("Looking for dynamic bodies...");
+                var i = 0;
+                while (dynBodyNames[i] != null && dynBodyMatrices[i] != null) {
+                    print("body " + dynBodyNames[i]);
+                    Browser.currentScene.getNamedNode(dynBodyNames[i]).matrix = dynBodyMatrices[i];
+                    ++i;
+                }
+            }        
+
+         ]]>
+            
+        </Script>
+        <ROUTE fromNode='setCamId' fromField='cameraId' toNode='markerTracker' toField='cameraId' />
+        <ROUTE fromNode='markerTracker' fromField='dynamicBodyNames' toNode='setCamId' toField='dynamicBodyNames' />
+        <ROUTE fromNode='markerTracker' fromField='dynamicBodyMatrices' toNode='setCamId' toField='dynamicBodyMatrices' />
+    
+    </Scene>
+</X3D>
+

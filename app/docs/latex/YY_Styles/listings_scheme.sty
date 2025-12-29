@@ -1,0 +1,76 @@
+
+\lstdefinelanguage[]{Scheme}%[]{}
+				  { keywords={
+					  abs,acos,and,angle,append,apply,approximate,asin,assoc,assq,assv,at-sign,atan,
+					  backquote,begin,boolean?,bound-identifier=?,bound?,
+					  caar,caddr,cadr,call-with-current-continuation,call-with-input-file,call-with-output-file,
+					  call/cc,car,case,catch,cdddar,cddddr,cdr,ceiling,
+					  char->integer,char-alphabetic?,
+					  char-ci<=?,char-ci<?,char-ci=?,char-ci>=?,char-ci>?,
+					  char-downcase,char-lower-case,char-numeric?,char-ready,char-ready?,char-upcase,char-upper-case?,char-whitespace?,
+					  char<=?,char<?,char=?,char>=?,char>?,char?,
+					  close-input-port,close-output-port,complex?,cond,cons,construct-identifier,cos,current-input-port,current-output-port,
+					  define,define-syntax,delay,denominator,display,do,
+					  else,eof-object?,eq?,equal?,eqv?,even?,exact->inexact,exact?,exp,expt,
+					  floor,for-each,force,free-identifier?,
+					  gcd,gen-counter,gen-loser,generate-identifier,
+					  identifier->symbol,identifier?,if,imag-part,inexact->exact,inexact?,input-port?,integer->char,integer?,integrate-system,
+					  lambda,last-pair,lcm,length,let,let*,let-syntax,letrec,letrec-syntax,
+					  list,list->string,list->vector,list-ref,list-tail,list?,load,log,
+					  magnitude,make-polar,make-promise,make-rectangular,make-string,make-vector,
+					  map,map-streams,max,member,memq,memv,min,modulo,
+					  negative?,newline,nil,not,null?,number->string,number?,numerator,
+					  odd?,open-input-file,open-output-file,or,output-port?,
+					  pair?,peek-char,positive?,procedure?,
+					  quasiquote,quote,quotient,
+					  rational?,rationalize?,read,read-char,read-part,real?,remainder,return,reverse,round,runge-kutta-4,
+					  sequence,set!,set-car!,set-cdr!,sin,sqrt,string,
+					  string->list,string->number,string->symbol,string-append,
+					  string-ci<=?,string-ci<?,string-ci=?,string-ci>=?,string-ci>?,
+					  string-copy,string-fill!,string-length,string-ref,string-set!,
+					  string<=?,string<?,string=?,string>=?,string>?,string?,
+					  substring,symbol->string,symbol?,syntax,syntax-rules,
+					  tan,transcript-off,transcript-on,truncate,
+					  unquote,unquote-splicing,unwrap-syntax,
+					  values-list,vector,vector->list,vector-fill!,vector-ref,vector-set!,vector?,
+					  with-input-from-file,with-output-to-file,write,write-char,
+					  zero?
+					  },
+					sensitive,
+					string=[b]{"},
+					comment=[l];
+				  }
+				  [keywords,comments,strings]
+
+\lstdefinelanguage[Elk]{Scheme}[]{Scheme}
+				  {morekeywords={
+					  append!,autoload,autoload-notify?,
+					  begin1,bound?,
+					  clear-input-port,clear-output-port,collect,collect-incremental,command-line-args,compound?,constant,control-point-environment,control-point?,cxr,
+					  define-macro,delay,disable-interrupts,dump,dynamic-wind,
+					  elk:dump,elk:load-object,enable-interrupts,environment?,environment->list,error,error-handler,eval,exit,
+					  feature,feature?,file-exists?,fluid-let,flush-output-port,force,format,get,get-output-string,global-environment,
+					  input-port?,interrupt-handler,lcm,
+					  load-libraries,load-noisily,load-path,
+					  macro,macro-body,macro-expand,macro?,make-list,
+					  oblist,open-input-output-file,open-input-string,open-output-string,output-port?,
+					  port-file-name,port-line-number,print,print-depth,print-length,procedure-environment,procedure-lambda,promise-environment,promise?,provide,put,
+					  random,read,read-char,read-string,require,reset,reverse!,srandom,substring-ci?,substring-fill!,substring?,symbol-plist,
+					  the-environment,tilde-expand,top-level-control-point,truncate,%type,
+					  unread-char,unwind-protect,
+					  vector-copy,vector-length,void?,
+					  with-input-from-file,with-interrupts-disabled,with-output-to-file,write,write-char
+				  }}
+
+\lstdefinelanguage[AGWBS]{Scheme}[Elk]{Scheme}
+				  {morekeywords={%
+					  define-class,define-method,make-instance,
+					  super-class,instance-vars,send,send-super,send-if-handles,
+					  instance-set!,with-instance,derived-from?,
+				      iprint}}
+
+\lstdefineformat{Scheme}{
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;=\string\newline,
+ ;=\string\newline,
+ ;;=\string\newline
+}

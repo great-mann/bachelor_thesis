@@ -1,0 +1,129 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+INCLUDE(FindPkgConfig)
+
+SET( PROJECT_NAME bart_rsb_server )
+PROJECT( ${PROJECT_NAME} )
+
+SET(BART_RSB_SERVER_NAME "${PROJECT_NAME}")
+SET(BART_RSB_SERVER_VERSION_MAJOR    "0")
+SET(BART_RSB_SERVER_VERSION_MINOR    "1")
+SET(BART_RSB_SERVER_VERSION_REVISION "0")
+SET(BART_RSB_SERVER_VERSION   "${BART_RSB_SERVER_VERSION_MAJOR}.${BART_RSB_SERVER_VERSION_MINOR}.${BART_RSB_SERVER_VERSION_REVISION}")
+SET(BART_RSB_SERVER_SOVERSION "${BART_RSB_SERVER_VERSION_MAJOR}.${BART_RSB_SERVER_VERSION_MINOR}")
+SET(BART_RSB_SERVER_PACKAGE   "${BART_RSB_SERVER_NAME}-${BART_RSB_SERVER_VERSION_MAJOR}.${BART_RSB_SERVER_VERSION_MINOR}")
+
+SET(PREFIX      ${CMAKE_INSTALL_PREFIX})
+SET(BINDIR     "${PREFIX}/bin")
+SET(INCLUDEDIR "${PREFIX}/include/bart_rsb_server")
+SET(MANDIR     "${PREFIX}/man")
+SET(LIBDIR     "${PREFIX}/lib")
+SET(PKGDIR     "${PREFIX}/lib/pkgconfig")
+SET(CFGDIR     "${PREFIX}/etc/bart_rsb_server")
+SET(DATADIR    "${PREFIX}/share/bart_rsb_server")
+
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -fstack-protector")
+
+SET(ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH}:${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" )
+# if ("$ENV{Boost_DIR}" STREQUAL "")
+  # set(BOOST_ROOT ${CMAKE_INSTALL_PREFIX})
+# endif()
+
+
+#set (Boost_DEBUG TRUE)
+
+#RSB/RST/RSC
+FIND_PACKAGE(RSC 0.11 REQUIRED)
+FIND_PACKAGE(RSB 0.11 REQUIRED)
+find_package(RSC 0.11 REQUIRED)
+find_package(rst-converters 0.11 REQUIRED)
+#RST
+FIND_PACKAGE(RST REQUIRED COMPONENTS sandbox)
+INCLUDE_DIRECTORIES(BEFORE SYSTEM ${RST_INCLUDE_DIRS})
+INCLUDE_DIRECTORIES(BEFORE SYSTEM ${RST_CONVERTERS_INCLUDE_DIRS})
+ADD_DEFINITIONS(${RST_CFLAGS} ${RSTSANDBOX_CFLAGS})
+
+INCLUDE_DIRECTORIES(BEFORE SYSTEM ${RSB_INCLUDE_DIRS})
+LIST(INSERT CMAKE_MODULE_PATH 0 ${RSC_CMAKE_MODULE_PATH})
+
+#this dummy list will make all header files appear if you use qtcreator to open the cmake project
+file(GLOB HEADER_LIST RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} include/*.h  )
+
+#Boost
+find_package(Boost 1.54  COMPONENTS chrono signals thread program_options system filesystem regex log log_setup date_time)
+if (Boost_FOUND)
+  message(STATUS "using boost version ${Boost_VERSION} from ${Boost_LIBRARY_DIRS}")
+  INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS} )
+  add_definitions(-DBOOST_LOG_AVAILABLE=1)
+else (Boost_FOUND)
+  message(STATUS "could not find a boost version with boost log. building without boost-log support!")
+  find_package(Boost 1.46 REQUIRED COMPONENTS chrono signals thread program_options system filesystem regex  date_time)
+  if (Boost_FOUND)
+    message(STATUS "using boost version ${Boost_VERSION} from ${Boost_LIBRARY_DIRS}")
+    INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS} )
+  else (Boost_FOUND)
+    message(FATAL_ERROR "could not find boost")
+  endif (Boost_FOUND)
+endif(Boost_FOUND)
+
+ADD_DEFINITIONS(-D BOOST_ALL_DYN_LINK)
+
+include(FindProtobuf)
+find_package(Protobuf REQUIRED)
+
+# Search for opencv
+find_package(OpenCV 2.4.9 REQUIRED core imgproc highgui ml gpu ocl contrib flann calib3d objdetect video flann features2d )
+
+  MESSAGE(STATUS "using opencv version ${OPENCV_VERSION} from ${OPENCV_PREFIX}")
+  INCLUDE_DIRECTORIES(${OpenCV_INCLUDE_DIRS})
+
+# Search for bart
+find_package(bart)
+IF (BART_FOUND)
+  MESSAGE(STATUS "using bart version ${BART_VERSION} from ${BART_LIBRARY_DIRS}")
+  INCLUDE_DIRECTORIES(${BART_INCLUDE_DIRS})
+ELSE (BART_FOUND)
+  message(FATAL_ERROR "ERROR: Cannot find bart")
+ENDIF (BART_FOUND)
+
+#this dummy list will make all header files appear if you use qtcreator to open the cmake project
+file(GLOB HEADER_LIST RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} include/*.h  )
+
+
+add_executable(${BART_RSB_SERVER_NAME} 
+	src/bart_rsb_server.cpp
+	${HEADER_LIST}
+)
+
+add_executable("${BART_RSB_SERVER_NAME}_test"
+	test/bart_rsb_server_test.cpp
+	${HEADER_LIST}
+)
+
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include ${BART_INCLUDE_DIRS})
+LINK_DIRECTORIES(${MOUSE_LIBRARY_DIRS} ${LIBDIR} ${CMAKE_CURRENT_SOURCE_DIR}/lib ${RSB_LIBRARY_DIRS} ${RST_LIBRARY_DIRS} ${RSC_LIBRARY_DIRS} ${RST_CONVERTERS_LIBRARY_DIRS} )
+target_link_libraries(${BART_RSB_SERVER_NAME} ${OpenCV_LIBS} ${RSB_LIBRARIES} ${RST_LIBRARIES} ${RSC_LIBRARIES} ${RST_CONVERTERS_LIBRARIES} ${BART_LIBRARIES} )
+target_link_libraries("${BART_RSB_SERVER_NAME}_test" ${OpenCV_LIBS} ${RSB_LIBRARIES} ${RST_LIBRARIES} ${RSC_LIBRARIES} ${RST_CONVERTERS_LIBRARIES})
+SET_TARGET_PROPERTIES(${BART_RSB_SERVER_NAME} PROPERTIES VERSION ${BART_RSB_SERVER_VERSION} SOVERSION ${BART_RSB_SERVER_SOVERSION})
+SET_TARGET_PROPERTIES("${BART_RSB_SERVER_NAME}_test" PROPERTIES VERSION ${BART_RSB_SERVER_VERSION} SOVERSION ${BART_RSB_SERVER_SOVERSION})
+
+install (TARGETS bart_rsb_server DESTINATION lib )
+INSTALL(FILES ${HEADER_LIST} DESTINATION ${INCLUDEDIR})
+set_target_properties(${BART_RSB_SERVER_NAME} PROPERTIES INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib)
+set_target_properties(${BART_RSB_SERVER_NAME} PROPERTIES INSTALL_RPATH_USE_LINK_PATH TRUE)
+set_property(TARGET ${BART_RSB_SERVER_NAME} PROPERTY INSTALL_RPATH_USE_LINK_PATH TRUE)  
+
+#create package config file
+SET(PKGCONFIG_FILENAME "bart_rsb_server.pc")
+configure_file("${PKGCONFIG_FILENAME}.in" "${PKGCONFIG_FILENAME}" @ONLY)
+INSTALL(FILES "${CMAKE_CURRENT_BINARY_DIR}/${PKGCONFIG_FILENAME}" DESTINATION "${PKGDIR}")
+
+#create cmake config files
+SET(CMAKECONFIG_FILENAME "bart_rsb_serverConfig.cmake")
+configure_file("${CMAKECONFIG_FILENAME}.in" "${CMAKECONFIG_FILENAME}" @ONLY)
+INSTALL(FILES "${CMAKE_CURRENT_BINARY_DIR}/${CMAKECONFIG_FILENAME}" DESTINATION "${DATADIR}")
+SET(CMAKECONFIGVERSION_FILENAME "bart_rsb_serverConfigVersion.cmake")
+configure_file("${CMAKECONFIGVERSION_FILENAME}.in" "${CMAKECONFIGVERSION_FILENAME}" @ONLY)
+INSTALL(FILES "${CMAKE_CURRENT_BINARY_DIR}/${CMAKECONFIGVERSION_FILENAME}" DESTINATION "${DATADIR}")
+
+
+

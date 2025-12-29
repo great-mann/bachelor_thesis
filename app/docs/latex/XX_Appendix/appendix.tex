@@ -1,0 +1,122 @@
+\chapter{Appendix}
+
+\section{Calibrating the Camera}
+
+Images retrieved from a camera might be distorted by the lenses the cameras are using. This can be easily detected when taking a picture of a straight line or even better a chess board. If the lines that are straight in reality are bending in the image provided by the camera, then the camera image is affected by distortion. 
+
+Happily, in most cases the image can be corrected (undistorted) by applying computer vision techniques. BART can also undistort the camera image, but for this, it requires some information from the camera. The camera needs to be calibrated and a special file with information about the distortion can be supplied to BART.
+
+To create this calibration file, a special tool called {\bf cameraCalibration} is provided together with BART. This tool can either take a collection of files taken with a camera, or directly use a camera connected to the computer to do the calibration.
+
+\subsection{Calibration Procedure}
+
+\begin{enumerate}
+	\item Create a configuration file {\bf CHOOSENAME.yaml} for the calibration.
+	\item A minimal configuration file should specify the elements shown in Listing~\ref{cameracalibrationconfigexampleimportantsettings}.
+	\item Print the calibration pattern, e.g. the chessboard pattern.
+	\item Run {\bf cameraCalibration {\em CHOOSENNAME.yaml}} to start the calibration procedure. Follow the instructions given on the console or the GUI. If everything works as desired, the calibration file specified in the configuration should have been created.
+\end{enumerate}
+
+\lstset{language=XML,basicstyle=\small,keywordstyle=\color{black}\bfseries\underbar,commentstyle
+=\color{blue},numbers=left,numberstyle=\tiny}
+
+\begin{lstlisting}[float,caption={Configuration file example for camera calibration - Most important settings},label=cameracalibrationconfigexampleimportantsettings]
+<?xml version="1.0"?>
+<opencv_storage>
+ <Settings>
+  <!-- Number of inner corners per item row and column. -->
+  <BoardSize_Width>5</BoardSize_Width>
+  <BoardSize_Height>8</BoardSize_Height>
+  
+  <!-- The resolution to be chosen (if possible) for the camera. 
+         Should be the same as the resolution later used in the
+         program at runtime. -->
+  <Camera_Width>1280</Camera_Width>
+  <Camera_Height>960</Camera_Height>  
+  
+  <!-- The size of a square of the calibration board in some user 
+        defined metric system (pixel, millimeter). This defines
+        the dimensions later provided by the tracking. If undecided,
+        measure the squares in terms of millimeters. -->
+  <Square_Size>30</Square_Size>
+  
+  <!-- The type of input used for camera calibration. 
+         One of: 
+           CHESSBOARD 
+           CIRCLES_GRID 
+           ASYMMETRIC_CIRCLES_GRID -->
+  <Calibrate_Pattern>"CHESSBOARD"</Calibrate_Pattern>
+  
+  <!-- The input to use for calibration. 
+      To use an input camera 
+          -> give the ID of the camera, like "1"
+      To use an input video  
+          -> give the path of the input video, like "/tmp/x.avi"
+      To use an image list   
+          -> give the path to the XML or YAML file containing 
+              the list of the images, like "/tmp/circles_list.xml"
+      -->
+  <Input>"0"</Input>
+  
+  <!--  If true (non-zero) we flip the input images 
+         around the horizontal axis.-->
+  <Input_FlipAroundHorizontalAxis>
+     0</Input_FlipAroundHorizontalAxis>
+  
+  <!-- Time delay between frames in case of camera. -->
+  <Input_Delay>500</Input_Delay>	
+  
+  <!-- How many frames to use, for calibration. -->
+  <Calibrate_NrOfFrameToUse>80</Calibrate_NrOfFrameToUse>
+
+  <!-- ADD EXPERT SETTINGS HERE IF NEEDED -->  
+ </Settings>
+</opencv_storage>
+\end{lstlisting}
+
+\begin{lstlisting}[float,caption={Configuration file example for camera calibration - Expert settings},label=cameracalibrationconfigexampleexpertsettings]
+  <!-- Consider only fy as a free parameter, 
+         the ratio fx/fy stays the same 
+         as in the input cameraMatrix. Use or not setting. 
+         0 - False 
+         Non-Zero - True -->
+  <Calibrate_FixAspectRatio> 1 </Calibrate_FixAspectRatio>
+  
+  <!-- If true (non-zero) tangential distortion coefficients 
+        are set to zeros and stay zero. -->
+  <Calibrate_AssumeZeroTangentialDistortion>
+      0</Calibrate_AssumeZeroTangentialDistortion>
+  
+  <!-- If true (non-zero) the principal point is not changed 
+        during the global optimization. -->
+  <Calibrate_FixPrincipalPointAtTheCenter>
+      0</Calibrate_FixPrincipalPointAtTheCenter>
+  
+  <!-- The name of the output log file. -->
+  <Write_outputFileName>"camera_MYNAME.xml"</Write_outputFileName>
+  
+  <!-- If true (non-zero) we write to the output file 
+        the feature points.-->
+  <Write_DetectedFeaturePoints>1</Write_DetectedFeaturePoints>
+  
+  <!-- If true (non-zero) we write to the output file 
+        the extrinsic camera parameters.-->
+  <Write_extrinsicParameters>1</Write_extrinsicParameters>
+  
+  <!-- If true (non-zero) we show after calibration the 
+        undistorted images.-->
+  <Show_UndistortedImage>1</Show_UndistortedImage>
+\end{lstlisting}
+
+\section{Testing BART with testMarkerTracker}
+
+\subsection{Running testMarkerTracker}
+
+The program testMarkerTracker comes with a couple of command line options. In addition to that, the behavior of the tracking can be configured in a special configuration file.
+
+If you want, for example, to analyze a previously recorded video, you can call testMarkerTracker as follows:
+{\bf testMarkerTracker.exe --file=myvideo.avi --config tracking.yaml}.
+
+More options are provided by adding the parameter --help: {\bf testMarkerTracker --help}.
+
+

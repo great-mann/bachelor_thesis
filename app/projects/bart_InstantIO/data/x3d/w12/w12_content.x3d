@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "http://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' profile='Full' version='3.0' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.0.xsd'> 
+    
+    
+    <Scene DEF='scene'>
+    
+        <ExternProtoDeclare name='FiducialMarker' url='../FiducialMarker.x3d'/>    
+    
+        
+        <MatrixTransform DEF='cubeBase' invert='false'>
+ 
+            <Transform DEF='t_358' translation='0 0 0' rotation='0 0 0 1.57'>
+                <FiducialMarker DEF='marker_358' id='358' size='0.032' />
+                <Transform DEF='t_axis' scale='0.01 0.01 0.01'>
+                    <Inline url='axis.x3d'/>
+                </Transform>
+            </Transform>
+
+        </MatrixTransform>
+        <ROUTE fromNode='tracking::markerTracker' fromField='globalCameraTransform' toNode='cubeBase' toField='matrix' />
+    
+    </Scene>
+</X3D>
+

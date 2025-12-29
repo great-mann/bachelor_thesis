@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "http://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' profile='Full' version='3.0' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.0.xsd'> 
+    
+    
+    <Scene DEF='scene'>
+    
+        <ExternProtoDeclare name='FiducialMarker' url='../FiducialMarker.x3d'/>    
+        <ExternProtoDeclare name='MarkerCube' url='MarkerCube.x3d'/>   
+    
+        <!--MarkerCube DEF='cubeYellow' ids='21 202 683 100 302 485' markerSize='0.05' cubeSize='0.065' />
+        <ROUTE fromNode='tracking::markerTracker' fromField='globalCameraTransform' toNode='cubeYellow' toField='matrix' /-->
+        
+        <!--MarkerCube DEF='cube00' ids='21 202 683 100 302 485' markerSize='0.052' cubeSize='0.071' />
+        <ROUTE fromNode='tracking::markerTracker' fromField='globalCameraTransform' toNode='cube0' toField='matrix' /-->
+        
+        <MarkerCube DEF='cube01' ids='344 308 272 384 436 475' markerSize='0.052' cubeSize='0.071' />
+        <ROUTE fromNode='tracking::markerTracker' fromField='globalCameraTransform' toNode='cube01' toField='matrix' />
+        
+        <!--MarkerCube DEF='cube02' ids='68 16 425 257 562 766' markerSize='0.052' cubeSize='0.071' />
+        <ROUTE fromNode='tracking::markerTracker' fromField='globalCameraTransform' toNode='cube02' toField='matrix' /-->
+        
+        <!--MarkerCube DEF='cube03' ids='671 721 771 621 521 571' markerSize='0.052' cubeSize='0.071' />
+        <ROUTE fromNode='tracking::markerTracker' fromField='globalCameraTransform' toNode='cube03' toField='matrix' /-->
+        
+        <!--MarkerCube DEF='cube04' ids='5 44 18 31 70 57' markerSize='0.052' cubeSize='0.071' />
+        <ROUTE fromNode='tracking::markerTracker' fromField='globalCameraTransform' toNode='cube04' toField='matrix' /-->
+        
+        <!--MarkerCube DEF='cube05' ids='4 43 17 30 69 56' markerSize='0.052' cubeSize='0.071' />
+        <ROUTE fromNode='tracking::markerTracker' fromField='globalCameraTransform' toNode='cube05' toField='matrix' /-->
+        
+        <!--MatrixTransform DEF='cubeBase' invert='false'>
+            <Transform DEF='t_innerCube'>
+                <Shape>
+                    <Box size='0.065 0.065 0.065'/>
+                    <Material diffuseColor='1 1 0'/>
+                </Shape>
+            </Transform>
+            
+            
+            <Transform DEF='t_21' translation='0.0325 0 0' rotation='0 1 0 1.57'>
+                <Transform DEF='t_21_1' translation='0 0 0' rotation='1 0 0 1.57'>
+                    <GlobalTransformSensor DEF='gts_21'/>
+                    <MatrixDecomposer DEF='dec_21'/>                    
+                    <ROUTE fromNode='gts_21' fromField='transformation_changed' toNode='dec_21' toField='set_matrix' />
+                    <FiducialMarker DEF='marker_21' id='21' size='0.05' />
+                </Transform>
+            </Transform>
+            <Transform DEF='t_202' translation='0 0 -0.0325' rotation='0 1 0 3.141'>
+                <Transform DEF='t_202_1' translation='0 0 0' rotation='1 0 0 1.57'>
+                    <GlobalTransformSensor DEF='gts_202'/>
+                    <MatrixDecomposer DEF='dec_202'/>                    
+                    <ROUTE fromNode='gts_202' fromField='transformation_changed' toNode='dec_202' toField='set_matrix' />
+                    <FiducialMarker DEF='marker_202' id='202' size='0.05' />
+                </Transform>
+            </Transform>
+            <Transform DEF='t_683' translation='-0.0325 0 0' rotation='0 1 0 -1.57'>
+                <Transform DEF='t_683_1' translation='0 0 0' rotation='1 0 0 1.57'>
+                    <GlobalTransformSensor DEF='gts_683'/>
+                    <MatrixDecomposer DEF='dec_683'/>                    
+                    <ROUTE fromNode='gts_683' fromField='transformation_changed' toNode='dec_683' toField='set_matrix' />
+                    <FiducialMarker DEF='marker_683' id='683' size='0.05' />
+                </Transform>
+            </Transform>
+            <Transform DEF='t_100' translation='0 0 0.0325' rotation='1 0 0 1.57'>
+                <FiducialMarker DEF='marker_100' id='100' size='0.05' />
+            </Transform>
+            <Transform DEF='t_302' translation='0 0.0325 0' rotation='0 1 0 1.57'>
+                <FiducialMarker DEF='marker_302' id='302' size='0.05' />
+            </Transform>
+            <Transform DEF='t_485' translation='0 -0.0325 0' rotation='0 1 0 1.57'>
+                <Transform DEF='t_485_1' translation='0 0 0' rotation='0 0 1 3.141'>
+                    <GlobalTransformSensor DEF='gts_485'/>
+                    <MatrixDecomposer DEF='dec_485'/>                    
+                    <ROUTE fromNode='gts_485' fromField='transformation_changed' toNode='dec_485' toField='set_matrix' />
+                    <FiducialMarker DEF='marker_485' id='485' size='0.05' />
+                </Transform>
+            </Transform>
+        </MatrixTransform>
+        <ROUTE fromNode='tracking::markerTracker' fromField='globalCameraTransform' toNode='cubeBase' toField='matrix' /-->
+    
+    </Scene>
+</X3D>
+

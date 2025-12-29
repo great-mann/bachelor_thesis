@@ -1,0 +1,128 @@
+\usepackage{a4}
+\usepackage{etex}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{textcomp}
+
+\usepackage{authoraftertitle}
+\usepackage{titling}
+
+\usepackage{times}
+%\usepackage[german,english]{babel}
+\usepackage{relsize}
+\usepackage{lmodern}
+
+\usepackage{fancyhdr}
+\usepackage{fancybox}
+
+%
+% Graphics
+%
+\usepackage{wrapfig}
+\setlength{\intextsep}{0cm plus1cm minus1cm}
+ 
+\usepackage[tight]{subfigure}
+\usepackage{graphicx}
+\usepackage{pdfpages}
+\usepackage{epstopdf}
+\usepackage{wallpaper}
+
+
+%
+% Math
+%
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+%
+% Bibliography and References
+%
+\usepackage[longnamesfirst]{natbib}
+\usepackage{citeref}
+\usepackage{varioref}
+
+% ,pagebackref fuehrte hier zu einem Haenger beim Erzeugen\ldots
+\usepackage[printonlyused,withpage]{acronym}
+
+%
+% Multimedia
+%
+%\usepackage[3D]{movie15}
+
+%
+% Source-Code
+%
+\usepackage[ruled]{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{listings}
+
+
+%
+% Tools
+%
+\usepackage{import}
+\usepackage{url}
+\usepackage[colorinlistoftodos,shadow]{todonotes}
+\usepackage{enumitem}
+
+%\pagestyle{fancy}
+
+\definecolor{light-gray}{gray}{0.80}
+\definecolor{mygray}{gray}{0.50}
+\definecolor{myblack}{gray}{0.0}
+
+%\fancypagestyle{plain}{%
+%\fancyhf{}
+%\fancyhead[LE]{\color{myblack}\thepage}
+%\fancyhead[RO]{\color{myblack}\thepage}
+%\fancyhead[RE]{\slshape{\leftmark}}
+%\fancyhead[LO]{\slshape{\rightmark}}
+%%\fancyfoot[LO,RE]{\color{mygray}\today}
+%\fancyfoot[C]{}
+%\fancyfoot[LE,RO]{}
+%}
+%\fancyhead[LE]{\color{myblack}\thepage}
+%\fancyhead[RO]{\color{myblack}\thepage}
+%\fancyhead[RE]{\slshape{\leftmark}}
+%\fancyhead[LO]{\slshape{\rightmark}}
+%%\fancyfoot[LO,RE]{\color{mygray}\today}
+%\fancyfoot[C]{}
+%\fancyfoot[LE,RO]{}
+
+\addtolength{\headheight}{3pt}
+\renewcommand{\chaptermark}[1]{\markboth{\color{myblack}Chapter \thechapter{}\
+#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\color{myblack}\thesection{}\ #1}}
+\renewcommand{\headrule}{{\color{myblack}%
+\hrule width\headwidth height\headrulewidth \vskip-\headrulewidth}}
+
+\usepackage{hyperref}
+\hypersetup{
+	unicode,%
+	breaklinks,%
+	colorlinks=true,%
+	linkcolor=black,%
+	linktoc=all,%
+	citecolor=black,%
+	filecolor=black,%
+	urlcolor=black%
+	}
+\usepackage[all]{hypcap}
+
+%
+% Layout haerter einstellen
+%
+\clubpenalty = 10000
+\widowpenalty = 10000
+\displaywidowpenalty = 10000
+\tolerance=9000
+
+%
+% Coole Items f�r Checklisten
+%
+\newcommand{\gooditem}{\item[\ding{51}]\hspace{4pt}}
+\newcommand{\baditem}{\item[\ding{53}]\hspace{4pt}}

@@ -1,0 +1,23 @@
+76.02%     0.00%  optimizedMarker  optimizedMarkerTracker            [.] _start                                                                                  ◆
++   76.02%     0.00%  optimizedMarker  libc.so.6                         [.] __libc_start_main@@GLIBC_2.34                                                           ▒
++   76.02%     0.00%  optimizedMarker  libc.so.6                         [.] __libc_start_call_main                                                                  ▒
++   68.72%     0.00%  optimizedMarker  optimizedMarkerTracker            [.] main                                                                                    ▒
++   68.72%     0.00%  optimizedMarker  libbart.so.0.1.0                  [.] MarkerTracker::processFrame(cv::Mat, boost::posix_time::ptime, std::__cxx11::basic_strin▒
++   68.72%     0.00%  optimizedMarker  libbart.so.0.1.0                  [.] MarkerTracker::processFrame(cv::Mat, boost::posix_time::ptime, std::__cxx11::basic_strin▒
++   67.59%     0.02%  optimizedMarker  libbart.so.0.1.0                  [.] MarkerTracker::processFrameInternal(cv::Mat, boost::posix_time::ptime, std::__cxx11::bas▒
++   60.15%     0.02%  optimizedMarker  libbart.so.0.1.0                  [.] DetectionLegacy::findMarkers(cv::Mat const&, cv::Mat const&, std::vector<Marker, std::al▒
++   23.31%     0.00%  optimizedMarker  libc.so.6                         [.] thread_start                                                                            ▒
++   13.80%    13.26%  optimizedMarker  libopencv_imgproc.so.4.9.0        [.] cvFindNextContour                                                                       ▒
++   11.26%     0.00%  optimizedMarker  [kernel.kallsyms]                 [k] el0t_64_sync                                                                            ▒
++   11.26%     0.00%  optimizedMarker  [kernel.kallsyms]                 [k] el0t_64_sync_handler                                                                    ▒
++   10.37%     1.69%  optimizedMarker  [kernel.kallsyms]                 [k] el0_svc                                                                                 ▒
++    9.76%     0.00%  optimizedMarker  libc.so.6                         [.] start_thread                                                                            ▒
++    9.55%     0.25%  optimizedMarker  libbart.so.0.1.0                  [.] DetectionLegacy::findContours(cv::Mat&, std::vector<std::vector<cv::Point_<int>, std::al▒
++    8.03%     0.07%  optimizedMarker  [kernel.kallsyms]                 [k] do_el0_svc                                                                              ▒
++    7.97%     0.04%  optimizedMarker  [kernel.kallsyms]                 [k] el0_svc_common.constprop.0                                                              ▒
++    7.94%     0.02%  optimizedMarker  libbart.so.0.1.0                  [.] DetectionLegacy::findMarkersWithPrior(cv::Mat const&, cv::Mat const&, float, Marker&, st▒
++    7.89%     0.12%  optimizedMarker  [kernel.kallsyms]                 [k] invoke_syscall                                                                          ▒
++    7.41%     0.30%  optimizedMarker  libopencv_core.so.4.9.0           [.] cv::WorkerThread::thread_body()                                                         ▒
++    7.41%     0.96%  optimizedMarker  libc.so.6                         [.] __sched_yield                                                                           ▒
+Cannot load tips.txt file, please install perf!                                                                                                                      ▒
+

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' profile='Immersive' version='3.0' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.0.xsd'>
+
+  <ContextSetup maxTexSize='4096'/>
+  <Engine>
+    <RenderJob>
+      <WindowGroup DEF='defaultWindowGroup'>
+        <LocalWindow DEF='overviewWindow' size='1280 960'> 
+		  <Viewarea lowerLeft="0 0" upperRight="1 1" view="overviewVP"/>
+        </LocalWindow>
+      </WindowGroup>
+    </RenderJob>
+  </Engine>
+
+
+  <Scene DEF='scene'>
+	<Viewpoint DEF="overviewVP" description="overview" zNear="0.001" zFar="10" isInteractive="true" position="-1.226 0.708 -0.143" orientation="-0.253 -0.94 -0.227 1.731"/>
+	<NavigationInfo interactionType='ray'/>   
+    <Transform translation="0 5 0">
+	  <PointLight location="0 5 0" color="1 1 1"/>
+	</Transform>
+
+	<Inline DEF="markers" url="MillimeterField.x3d" nameSpaceName='markers'/>
+
+    <!-- MarkerTracker IOSensor -->
+	  	<IOSensor DEF='smietg' type='irioSMIEyeTracker' sync='false' InstantIONodeAddress='127.0.0.1' InstantIONodePort='5555' ETGServerAddress='127.0.0.1' ETGServerPort='4444'>
+        <field accessType='outputOnly' name='directionLeftEye' type='SFVec3f'/>
+	    <field accessType='outputOnly' name='directionRightEye' type='SFVec3f'/>
+		<field accessType='outputOnly' name='directionBothEyes' type='SFVec3f'/>
+        <field accessType='outputOnly' name='positionLeftEye' type='SFVec3f'/>
+		<field accessType='outputOnly' name='positionRightEye' type='SFVec3f'/>
+		<field accessType='outputOnly' name='positionBothEyes' type='SFVec3f'/>
+        <field accessType='outputOnly' name='porLeftEye' type='SFVec2f'/>
+        <field accessType='outputOnly' name='porRightEye' type='SFVec2f'/>
+        <field accessType='outputOnly' name='porBothEyes' type='SFVec2f'/>
+        <field accessType='outputOnly' name='pupilDiameterLeftEye' type='SFVec2f'/>
+        <field accessType='outputOnly' name='pupilDiameterRightEye' type='SFVec2f'/>
+        <field accessType='outputOnly' name='pupilConfidenceLeftEye' type='SFFloat'/>
+        <field accessType='outputOnly' name='pupilConfidenceRightEye' type='SFFloat'/>
+        <field accessType='outputOnly' name='pupilSizeLeftEye' type='SFFloat'/>
+        <field accessType='outputOnly' name='pupilSizeRightEye' type='SFFloat'/>
+        <field accessType='outputOnly' name='relativePositionY' type='SFFloat'/> 
+        <field accessType='outputOnly' name='trackingQuality' type='SFInt32'/>
+        <field accessType='outputOnly' name='trackingRatioRecent' type='SFInt32'/>
+        <field accessType='outputOnly' name='trackingRatioTotal' type='SFInt32'/>
+        <field accessType='outputOnly' name='sceneCamera' type='SFImage'/>
+        <field accessType='outputOnly' name='sceneCameraFrameNumber' type='SFInt32'/>
+        <field accessType='outputOnly' name='cameraLeftEye' type='SFImage'/>
+        <field accessType='outputOnly' name='cameraRightEye' type='SFImage'/>
+        <field accessType='outputOnly' name='eyeCameraFrameNumber' type='SFInt32'/>
+        <field accessType='inputOnly'  name='trackingMode' type='SFString'/>
+        <field accessType='inputOnly'  name='resolutionSceneCamera' type='SFString'/>
+        <field accessType='inputOnly'  name='resolutionEyeCamera' type='SFString'/>
+        <field accessType='inputOnly'  name='sampleRateSceneCamera' type='SFFloat'/>
+        <field accessType='inputOnly'  name='sampleRateEyeCamera' type='SFFloat'/>
+        <field accessType='inputOnly'  name='whiteBalanceMode' type='SFString'/>
+        <field accessType='inputOnly'  name='calibrationActive' type='SFBool'/>
+        <field accessType='inputOnly'  name='calibrate' type='SFVec2f'/>
+        <field accessType='inputOnly'  name='sceneCameraMode' type='SFString' value='normal'/>
+        <field accessType='inputOnly'  name='eyeCameraMode' type='SFString'/>
+    	</IOSensor>
+     <!-- MarkerTracker IOSensor -->
+    <IOSensor DEF='markerTracker' name='markerTracker' type='irioMarkerTracker' useInternalInput='false'
+              knownMarkers='1' markerSizes='0.085'>
+      <field accessType='inputOnly'  name='inputImage'       type='SFImage'/>  
+      <field accessType='outputOnly' name='markerMatrizes'   type='MFMatrix4f'/>
+      <field accessType='outputOnly' name='markerIds'        type='MFInt32'/>
+      <field accessType='outputOnly' name='outputImage'      type='SFImage'/>
+    </IOSensor>
+	<ROUTE fromNode="smietg" fromField="sceneCamera" toNode="markerTracker" toField="inputImage"/>
+        <IOSensor DEF='clockETG' name='clockETG' type='Clock' />
+
+	
+
+	<MatrixTransform DEF='HeadTransform' invert="false" >
+	  <Viewpoint DEF="eyeVP" description="eye" fieldOfView='0.788293' zNear="0.001" zFar="10" position="0 0 0" isInteractive="false"/>
+	  <Transform translation='0 0 0.021'>
+		<Transform translation='0 0.08 0'>
+		  <Billboard axisOfRotation="0 0 0">
+			<Shape>
+			  <Appearance><Material diffuseColor='0 0 0'></Material></Appearance>
+			  <Text solid='true' depth='0' string='ETG-MarkerTracking'>	
+				<GenericFontStyle family='SANS' justify='FIRST' style='PLAIN' size='0.06' />
+			  </Text>
+			</Shape>	
+		  </Billboard>
+		</Transform>				
+		<Shape>
+		  <Box size="0.2 0.1 0.01"/>
+		  <Appearance DEF="ETGHEADCOLOR">
+			<Material diffuseColor='0 0 1' transparency='0.2'/>
+		  </Appearance>
+		</Shape>
+	  </Transform>
+	  <Transform translation="0 0 0.04" rotation="1 0 0 -1.57">
+		<Shape>
+		  <Cone bottomRadius="0.009" height="0.04" />
+		  <Appearance USE="ETGHEADCOLOR" />
+		</Shape>
+		<Transform translation="0 -0.04 0">
+		  <Shape>
+			<Cylinder radius="0.005" height="0.04" />
+			<Appearance USE="ETGHEADCOLOR" />
+		  </Shape>
+		</Transform>   
+	  </Transform>
+
+	  <!-- Eye Stuff Goes Here -->
+	  <Collision collide='false' enabled='true'>
+		<Transform DEF='eyeSpace' translation='0 0 0' rotation='1 0 0 0.12'>
+		  <Transform DEF='leftEyeSpace' >
+			<Transform DEF='leftEyeTransform'>
+
+			  <!--UserBody DEF='leftEyeUserBody' enabled='false'-->
+			  <Transform DEF='leftEyeRayTransformRot' rotation='1 0 0 1.571'>
+				<Transform DEF='leftEyeRayTransformTrans' translation='0 -5 0'>
+				  <Shape DEF='leftEyeShape'>
+					<Cylinder radius='0.001' height='10' DEF='leftEyeRay' />
+					<Appearance DEF='eyeRayAppearance'>
+					  <Material diffuseColor='0 1 0' transparency='0.5'/>
+					</Appearance>
+				  </Shape>
+				</Transform>
+			  </Transform>
+			  <!--/UserBody-->
+			</Transform>
+		  </Transform>
+
+		  <Transform DEF='rightEyeSpace'>
+			<Transform DEF='rightEyeTransform'>
+			  <!--UserBody  DEF='rightEyeUserBody' enabled='false'-->
+
+			  <Transform DEF='rightEyeRayTransformRot' rotation='1 0 0 1.571'>
+				<Transform DEF='rightEyeRayTransformTrans' translation='0 -5 0'>
+				  <Shape DEF='rightEyeShape'>
+					<Cylinder radius='0.001' height='10' DEF='rightEyeRay' />
+					<Appearance USE='eyeRayAppearance'/>
+				  </Shape>
+				</Transform>
+			  </Transform>
+			  <!--/UserBody-->
+			</Transform>
+		  </Transform>
+
+		</Transform>
+	  </Collision>
+	</MatrixTransform>
+
+	<!-- This is the base -->
+	<Viewspace>
+	  <ImageBackground>
+		<PixelTexture DEF="sceneImage">
+		  <TextureProperties borderWidth="0.1" borderColor="1.0 1.0 1.0" magnificationFilter="NICEST"/>
+		</PixelTexture>
+	  </ImageBackground>
+	  <ROUTE fromNode='markerTracker' fromField='outputImage' toNode='sceneImage' toField='image'/>
+	  <ROUTE fromNode='smietg' fromField='sceneCamera' toNode='sceneImage' toField='image'/>
+	</Viewspace>
+
+	<Script DEF='multiMarkerTracking' directOutput='true' mustEvaluate='true' url="MultiMarkerTracking.js">
+	  <!-- The array of input matrices that represent individual marker positions and orientations -->
+	  <field accessType='inputOnly' name='markerMatrizes' type='MFMatrix4f'/>
+	  <!-- The array of input marker Ids in the order of the matrices -->
+	  <field accessType='inputOnly' name='markerIds' type='MFInt32'/>
+	  <!-- The Id of the origin marker -->
+	  <field accessType='initializeOnly' name='originId' type='SFInt32' value='0'/>  <!--682-->
+      <!-- The Ids of static markers -->
+	  <field accessType='initializeOnly' name='staticMarkerIds' type='MFInt32' value='0 1 42 75 173 213 250 364 682 773 981 1023'/>
+	  <!-- The frame of reference matrix -->
+	  <field accessType='outputOnly' name='frame_of_reference' type='SFMatrix4f'/>
+      <!-- The frame of reference matrix, inverted -->
+	  <field accessType='outputOnly' name='frame_of_reference_inverted' type='SFMatrix4f'/>
+	  <!-- Is 0 if no markers are tracked -->
+	  <field accessType ='outputOnly' name='isMarked' type='SFInt32' />
+	  <!-- Is 0 if no markers are tracked -->
+	  <field accessType ='outputOnly' name='markerState' type='SFString'/>
+	</Script>
+	<ROUTE fromNode='multiMarkerTracking' fromField='markerState' toNode='io::networkIn' toField='markerState'/>
+	<ROUTE fromNode='multiMarkerTracking' fromField='frame_of_reference_inverted' toNode='io::networkIn' toField='glasses_frame_of_reference'/>
+	<ROUTE fromNode='markerTracker' fromField='markerMatrizes' toNode='multiMarkerTracking' toField='markerMatrizes' />
+	<ROUTE fromNode='markerTracker' fromField='markerIds' toNode='multiMarkerTracking' toField='markerIds' />
+	<ROUTE fromNode='multiMarkerTracking' fromField='frame_of_reference_inverted' toNode='HeadTransform' toField='matrix' />
+  </Scene>
+
+</X3D>

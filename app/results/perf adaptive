@@ -1,0 +1,10 @@
+sudo perf stat -e cycles,instructions,cache-misses,L1-dcache-load-misses   ./optimizedMarkerTracker --threshold=adaptive
+
+Performance counter stats for './optimizedMarkerTracker --threshold=adaptive':
+   103,451,942,279      cycles                                                                
+    50,798,621,077      instructions                     #    0.49  insn per cycle            
+       272,100,946      cache-misses                                                          
+       272,100,946      L1-dcache-load-misses                                                 
+      27.266404407 seconds time elapsed
+      50.447870000 seconds user
+      19.192788000 seconds sys

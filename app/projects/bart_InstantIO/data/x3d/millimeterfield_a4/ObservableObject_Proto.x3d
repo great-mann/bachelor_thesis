@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "http://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' profile='Full' version='3.0' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.0.xsd'>
+  
+    <ProtoDeclare name='ObservableObject'>
+        <ProtoInterface>
+            <field accessType='inputOutput' name='name' type='SFString' value='default' description='Name of the object.'/>
+            <field accessType='inputOutput' name='position' type='SFVec3f'  description='Position of the object.'/>
+            <field accessType='inputOutput' name='size' type='SFVec3f'  description='Size of the object.'/>
+            <field accessType='inputOutput' name='color' type='SFColor' value='0 0 0'  description='Color of the object.'/>
+			<field accessType='outputOnly' name='isObserved' type='SFBool'  description='True if the object is observed.'/>
+        </ProtoInterface>
+
+        <ProtoBody>
+
+            <Transform DEF='objectBase'>
+				<IS>
+                    <connect nodeField='scale' protoField='size'/>
+                </IS>
+                <Shape DEF='objectShape'>
+                    <Box size='1 1 1'/>
+                    <Appearance>
+                        <Material DEF='objectMaterial' transparency='0.5'>
+                            <IS>
+                                <connect nodeField='diffuseColor' protoField='color'/>
+                            </IS>
+                        </Material>
+                    </Appearance>
+                </Shape>
+				<TouchSensor DEF='touchSensor'>
+					<IS>
+						<connect nodeField='isOver' protoField='isObserved'/>
+					</IS>
+				</TouchSensor>
+            </Transform>
+            
+      
+            <Script DEF='objectScript' mustEvaluate="true" directOutput="true">
+                <field accessType='inputOutput' name='name' type='SFString' />
+                <field accessType='inputOutput' name='positionIn' type='SFVec3f' />
+                <IS>
+                    <connect nodeField='positionIn' protoField='position'/>
+                </IS>
+                <field accessType='inputOutput' name='scale' type='SFVec3f' />
+                <IS>
+                    <connect nodeField='scale' protoField='size'/>
+                </IS>
+				<field accessType='inputOutput' name='colorIn' type='SFColor' />
+                <IS>
+                    <connect nodeField='colorIn' protoField='color'/>
+                </IS>
+				<field accessType='inputOutput' name='isOver' type='SFBool' />
+                <field accessType='outputOnly' name='positionOut' type='SFVec3f' />
+				<field accessType='outputOnly' name='colorOut' type='SFColor' />
+                <![CDATA[javascript:
+  
+  					function initialize() { 
+                        print("Created object " + name);
+						originalColor = colorIn;
+						currentColor = colorIn;
+                        doPosition();
+                    }
+                    
+                    function positionIn() {
+                        doPosition();
+                    }
+                    
+                    function doPosition() {
+                        positionOut = SFVec3f(positionIn.x, positionIn.y*-1.0, scale.z/2.0 + positionIn.z);
+                    }
+					
+					function isOver(value) {
+						if (value) {
+							colorOut = new SFColor(1, 0, 0);
+						} else {
+							colorOut = originalColor;
+						}
+					}
+                    
+
+                ]]>
+            </Script>
+            <ROUTE fromNode='objectScript' fromField='positionOut' toNode='objectBase' toField='translation'/>
+            <ROUTE fromNode='touchSensor' fromField='isOver' toNode='objectScript' toField='isOver'/>    
+			
+			<ColorChaser DEF='observeColor' duration='3'/>
+			<ROUTE fromNode='objectScript' fromField='colorOut' toNode='observeColor' toField='set_destination'/>
+			<ROUTE fromNode='observeColor' fromField='value_changed' toNode='objectMaterial' toField='diffuseColor'/>
+            
+            <!-- This EventTunnel is used to get the current tracking data -->
+			<EventTunnel DEF='trackingEvents' label='trackingEvents'>
+    			<field accessType='outputOnly' name='dynamicBodyNames'  type='MFString'/>
+                <field accessType='outputOnly' name='dynamicBodyMatrices' type='MFMatrix4f'/>
+			</EventTunnel>
+			<ROUTE fromNode='MarkerTrackingEvents' fromField='detectedMarkerIDs' toNode='assignRectsScript' toField='detectedMarkerIDs'/>
+
+        </ProtoBody>
+    </ProtoDeclare>
+</X3D>
